@@ -1,12 +1,12 @@
 import Column from "../Column/Column";
 
-const Main = () => {
+const Main = ({ loading }) => {
   return (
     <main className="main">
       <div className="container">
         <div className="main__block">
           <div className="main__content">
-            <div className="main__column column">
+            {/* <div className="main__column column">
               <div className="column__title">
                 <p>Без статуса</p>
               </div>
@@ -559,8 +559,8 @@ const Main = () => {
                   </div>
                 </div>
               </div>
-            </div>
-            <Column />
+            </div> */}
+            {loading ? <h1>Данные загружаются</h1> : <Column />}
           </div>
         </div>
       </div>

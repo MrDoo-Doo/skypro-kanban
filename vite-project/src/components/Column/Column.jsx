@@ -1,13 +1,18 @@
 import Card from "../Card/Card";
+import { columnList } from "../../data.js";
 
 const Column = () => {
   return (
-    <div className="main__column">
-      <div className="column__title">
-        <p>Готово</p>
-      </div>
-      <Card />
-    </div>
+    <>
+      {columnList.map((column) => (
+        <div className="main__column">
+          <div className="column__title">
+            <p>{column.name}</p>
+          </div>
+          <Card statusTask={column.name} />
+        </div>
+      ))}
+    </>
   );
 };
 

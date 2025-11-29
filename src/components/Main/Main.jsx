@@ -1,6 +1,14 @@
 import Column from "../Column/Column";
+import { cardList, columnList } from "../../data.js";
+
+const filterCards = (statusName) => {
+  let cardArr = cardList.filter((cardEl) => cardEl.status === statusName);
+  return cardArr;
+};
 
 const Main = ({ loading }) => {
+  // const [cardArray, setCardArray] = useState(true);
+
   return (
     <main className="main">
       <div className="container">
@@ -560,7 +568,21 @@ const Main = ({ loading }) => {
                 </div>
               </div>
             </div> */}
-            {loading ? <h1>Данные загружаются</h1> : <Column />}
+
+            {loading ? (
+              <h1>Данные загружаются</h1>
+            ) : (
+              <>
+                {columnList.map((column) => (
+                  <div key={column.id} className="main__column">
+                    <Column
+                      cardArray={filterCards(column.name)}
+                      columnName={column.name}
+                    />
+                  </div>
+                ))}
+              </>
+            )}
           </div>
         </div>
       </div>

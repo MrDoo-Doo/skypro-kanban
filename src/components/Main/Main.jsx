@@ -1,12 +1,20 @@
 import Column from "../Column/Column";
+import { cardList, columnList } from "../../data.js";
 
-const Main = () => {
+const filterCards = (statusName) => {
+  let cardArr = cardList.filter((cardEl) => cardEl.status === statusName);
+  return cardArr;
+};
+
+const Main = ({ loading }) => {
+  // const [cardArray, setCardArray] = useState(true);
+
   return (
     <main className="main">
       <div className="container">
         <div className="main__block">
           <div className="main__content">
-            <div className="main__column column">
+            {/* <div className="main__column column">
               <div className="column__title">
                 <p>Без статуса</p>
               </div>
@@ -559,8 +567,22 @@ const Main = () => {
                   </div>
                 </div>
               </div>
-            </div>
-            <Column />
+            </div> */}
+
+            {loading ? (
+              <h1>Данные загружаются</h1>
+            ) : (
+              <>
+                {columnList.map((column) => (
+                  <div key={column.id} className="main__column">
+                    <Column
+                      cardArray={filterCards(column.name)}
+                      columnName={column.name}
+                    />
+                  </div>
+                ))}
+              </>
+            )}
           </div>
         </div>
       </div>

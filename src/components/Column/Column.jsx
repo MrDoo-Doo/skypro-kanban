@@ -6,7 +6,14 @@ const Column = ({ cardArray, columnName }) => {
       <div className="column__title">
         <p>{columnName}</p>
       </div>
-      <Card cardArray={cardArray} />
+      {cardArray.map((card) => (
+        <Card
+          cardTopic={card.topic}
+          cardId={card.id}
+          cardTitle={card.title}
+          cardDate={card.date}
+        />
+      ))}
     </>
   );
 };

@@ -1,11 +1,24 @@
-const Card = () => {
+const Card = ({ cardDate, cardTitle, cardId, cardTopic }) => {
+  const colorTopic = (topic) => {
+    switch (topic) {
+      case "Research":
+        return "_green";
+      case "Web Design":
+        return "_orange";
+      case "Copywriting":
+        return "_purple";
+      default:
+        return "";
+    }
+  };
+
   return (
-    <div className="cards">
+    <div key={cardId} className="cards">
       <div className="cards__item">
         <div className="cards__card card">
           <div className="card__group">
-            <div className="card__theme _green">
-              <p className="_green">Research</p>
+            <div className={`card__theme ${colorTopic(cardTopic)}`}>
+              <p className={colorTopic(cardTopic)}>{cardTopic}</p>
             </div>
             <a href="#popBrowse" target="_self">
               <div className="card__btn">
@@ -17,7 +30,7 @@ const Card = () => {
           </div>
           <div className="card__content">
             <a href="" target="_blank">
-              <h3 className="card__title">Название задачи</h3>
+              <h3 className="card__title">{cardTitle}</h3>
             </a>
             <div className="card__date">
               <svg
@@ -48,7 +61,7 @@ const Card = () => {
                   </clipPath>
                 </defs>
               </svg>
-              <p>30.10.23</p>
+              <p>{cardDate}</p>
             </div>
           </div>
         </div>

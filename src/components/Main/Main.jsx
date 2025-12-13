@@ -1,6 +1,7 @@
 import Column from "../Column/Column.jsx";
 import { cardList, columnList } from "../../data.js";
-
+import { SMain, SMainBlock, SMainContent, SMainColumn } from "./Main.styled.js";
+import { SContainer } from "../Header/Header.styled.js";
 const filterCards = (statusName) => {
   let cardArr = cardList.filter((cardEl) => cardEl.status === statusName);
   return cardArr;
@@ -8,28 +9,28 @@ const filterCards = (statusName) => {
 
 const Main = ({ loading }) => {
   return (
-    <main className="main">
-      <div className="container">
-        <div className="main__block">
-          <div className="main__content">
+    <SMain>
+      <SContainer>
+        <SMainBlock>
+          <SMainContent>
             {loading ? (
               <h1>Данные загружаются</h1>
             ) : (
               <>
                 {columnList.map((column) => (
-                  <div key={column.id} className="main__column">
+                  <SMainColumn key={column.id}>
                     <Column
                       cardArray={filterCards(column.name)}
                       columnName={column.name}
                     />
-                  </div>
+                  </SMainColumn>
                 ))}
               </>
             )}
-          </div>
-        </div>
-      </div>
-    </main>
+          </SMainContent>
+        </SMainBlock>
+      </SContainer>
+    </SMain>
   );
 };
 

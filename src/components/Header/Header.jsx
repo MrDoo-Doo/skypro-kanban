@@ -1,29 +1,41 @@
 import PopUser from "../PopUser/PopUser";
+import {
+  SHeader,
+  SHeaderBlock,
+  SHeaderLogo,
+  SHeaderLogoIMG,
+  SHeaderNav,
+  SHeaderBtnMainNew,
+  SHeaderBtnMainNewA,
+  SContainer,
+} from "./Header.styled.js";
 
 const Header = () => {
   return (
-    <header className="header">
-      <div className="container">
-        <div className="header__block">
-          <div className="header__logo _show _light">
+    <SHeader>
+      <SContainer>
+        <SHeaderBlock>
+          <SHeaderLogo className="_show _light">
             <a href="" target="_self">
-              <img src="images/logo.png" alt="logo" />
+              <SHeaderLogoIMG src="images/logo.png" alt="logo" />
             </a>
-          </div>
-          <div className="header__logo _dark">
+          </SHeaderLogo>
+          <SHeaderLogo className="_dark">
             <a href="" target="_self">
-              <img src="images/logo_dark.png" alt="logo" />
+              <SHeaderLogoIMG src="images/logo_dark.png" alt="logo" />
             </a>
-          </div>
-          <nav className="header__nav">
-            <button className="header__btn-main-new _hover01" id="btnMainNew">
-              <a href="#popNewCard">Создать новую задачу</a>
-            </button>
+          </SHeaderLogo>
+          <SHeaderNav>
+            <SHeaderBtnMainNew className="_hover01" id="btnMainNew">
+              <SHeaderBtnMainNewA href="#popNewCard">
+                Создать новую задачу
+              </SHeaderBtnMainNewA>
+            </SHeaderBtnMainNew>
             <PopUser />
-          </nav>
-        </div>
-      </div>
-    </header>
+          </SHeaderNav>
+        </SHeaderBlock>
+      </SContainer>
+    </SHeader>
   );
 };
 

@@ -9,8 +9,15 @@ import {
   SHeaderBtnMainNewA,
   SContainer,
 } from "./Header.styled.js";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
+
+  function createTask(e) {
+    e.preventDefault();
+    navigate("/card/add");
+  }
   return (
     <SHeader>
       <SContainer>
@@ -26,7 +33,11 @@ const Header = () => {
             </a>
           </SHeaderLogo>
           <SHeaderNav>
-            <SHeaderBtnMainNew className="_hover01" id="btnMainNew">
+            <SHeaderBtnMainNew
+              onClick={createTask}
+              className="_hover01"
+              id="btnMainNew"
+            >
               <SHeaderBtnMainNewA href="#popNewCard">
                 Создать новую задачу
               </SHeaderBtnMainNewA>

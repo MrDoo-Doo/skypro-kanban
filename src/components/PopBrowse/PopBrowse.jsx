@@ -1,8 +1,19 @@
+import { useMemo } from "react";
 import Calendar from "../Calendar/Calendar";
+import { useParams, useNavigate } from "react-router-dom";
+import { cardList } from "../../data.js";
 
 const PopBrowse = () => {
+  const { id } = useParams();
+  // if (id) console.log(id);
+  const task = useMemo(() => cardList.find((t) => t.id === id), [id]);
+  const navigate = useNavigate();
+  function close(e) {
+    e.preventDefault();
+    navigate("/");
+  }
   return (
-    <div className="pop-browse" id="popBrowse">
+    <div className="pop-browse" id={task}>
       <div className="pop-browse__container">
         <div className="pop-browse__block">
           <div className="pop-browse__content">
@@ -13,7 +24,7 @@ const PopBrowse = () => {
               </div>
             </div>
             <div className="pop-browse__status status">
-              <p className="status__p subttl">Статус</p>
+              <p className="status__p subttl">Статус {id}</p>
               <div className="status__themes">
                 <div className="status__theme _hide">
                   <p>Без статуса</p>
@@ -68,8 +79,11 @@ const PopBrowse = () => {
                   <a href="#">Удалить задачу</a>
                 </button>
               </div>
-              <button className="btn-browse__close _btn-bg _hover01">
-                <a href="#">Закрыть</a>
+              <button
+                onClick={close}
+                className="btn-browse__close _btn-bg _hover01"
+              >
+                {/* <a href="#">Закрыть</a> */}Закрыть
               </button>
             </div>
             <div className="pop-browse__btn-edit _hide">

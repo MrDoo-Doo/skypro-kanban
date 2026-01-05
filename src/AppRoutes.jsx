@@ -10,7 +10,7 @@ import NotPage from "./pages/NotPage";
 import PrivateRoute from "./components/PrivateRoute";
 
 function AppRoutes() {
-  const [isAuth, setIsAuth] = useState(true);
+  const [isAuth, setIsAuth] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

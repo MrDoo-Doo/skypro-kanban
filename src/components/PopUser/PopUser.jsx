@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const PopUser = () => {
   const [modalWin, setModalWin] = useState(false);
@@ -13,6 +14,14 @@ const PopUser = () => {
   const styleWin = {
     display: modalWin ? "block" : "none",
   };
+
+  const navigate = useNavigate();
+
+  function exit(e) {
+    e.preventDefault();
+    navigate("/exit");
+  }
+
   return (
     <>
       <a
@@ -33,8 +42,10 @@ const PopUser = () => {
           <p>Темная тема</p>
           <input type="checkbox" className="checkbox" name="checkbox" />
         </div>
-        <button type="button" className="_hover03">
-          <a href="#popExit">Выйти</a>
+        <button onClick={exit} type="button" className="_hover03">
+          {/* <Link to="/exit">Выйти</Link> */}
+          {/* <a href="#popExit">Выйти</a> */}
+          Выйти
         </button>
       </div>
     </>

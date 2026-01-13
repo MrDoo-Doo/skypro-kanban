@@ -2,12 +2,14 @@ import Column from "../Column/Column.jsx";
 import { cardList, columnList } from "../../data.js";
 import { SMain, SMainBlock, SMainContent, SMainColumn } from "./Main.styled.js";
 import { SContainer } from "../Header/Header.styled.js";
-const filterCards = (statusName) => {
-  let cardArr = cardList.filter((cardEl) => cardEl.status === statusName);
+
+const filterCards = (newCardArr, statusName) => {
+  let cardArr = newCardArr.filter((cardEl) => cardEl.status === statusName);
   return cardArr;
 };
 
-const Main = ({ loading }) => {
+const Main = ({ loading, error, tasks }) => {
+  console.log("Рендеринг Column, tasks:", tasks);
   return (
     <SMain>
       <SContainer>
@@ -20,7 +22,8 @@ const Main = ({ loading }) => {
                 {columnList.map((column) => (
                   <SMainColumn key={column.id}>
                     <Column
-                      cardArray={filterCards(column.name)}
+                      key={column.id}
+                      cardArray={filterCards(tasks, column.name)}
                       columnName={column.name}
                     />
                   </SMainColumn>
@@ -29,6 +32,7 @@ const Main = ({ loading }) => {
             )}
           </SMainContent>
         </SMainBlock>
+        <p>{error}</p>
       </SContainer>
     </SMain>
   );

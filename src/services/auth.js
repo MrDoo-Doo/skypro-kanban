@@ -2,11 +2,6 @@ import axios from "axios";
 
 const API_URL = "https://wedev-api.sky.pro/api/user";
 
-// export function setToken(newToken){
-//  let token = newToken;
-//  return token;
-// }
-
 export async function signIn(userData) {
   try {
     const data = await axios.post(`${API_URL}/login`, userData, {
@@ -32,6 +27,7 @@ export async function signUp({ name, login, password }) {
         },
       }
     );
+    localStorage.setItem("tokenAuth", data.data.user.token);
     return data.data.user;
   } catch (error) {
     throw new Error(error.response.data.error);

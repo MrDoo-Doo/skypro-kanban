@@ -5,11 +5,6 @@ import { fetchTasks } from "../services/api";
 import { useEffect, useState, useCallback } from "react";
 import { Outlet } from "react-router-dom";
 
-// export function setToken(newToken){
-//  let token = newToken;
-//  return token;
-// }
-
 function MainPage() {
   console.log("002");
   let tokenA = localStorage.getItem("tokenAuth");

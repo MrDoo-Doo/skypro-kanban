@@ -1,5 +1,5 @@
 import Column from "../Column/Column.jsx";
-import { cardList, columnList } from "../../data.js";
+import { columnList } from "../../data.js";
 import { SMain, SMainBlock, SMainContent, SMainColumn } from "./Main.styled.js";
 import { SContainer } from "../Header/Header.styled.js";
 
@@ -22,7 +22,6 @@ const Main = ({ loading, error, tasks }) => {
                 {columnList.map((column) => (
                   <SMainColumn key={column.id}>
                     <Column
-                      key={column.id}
                       cardArray={filterCards(tasks, column.name)}
                       columnName={column.name}
                     />

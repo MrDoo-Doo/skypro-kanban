@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import MainPage from "./pages/MainPage";
 import AddTask from "./pages/AddTask";
 import ShowCard from "./pages/ShowCard";
@@ -11,18 +11,12 @@ import PrivateRoute from "./components/PrivateRoute";
 
 function AppRoutes() {
   const [isAuth, setIsAuth] = useState(false);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-  }, []);
+  console.log("001");
 
   return (
     <Routes>
       <Route element={<PrivateRoute isAuth={isAuth} />}>
-        <Route path="/" element={<MainPage loading={loading} />}>
+        <Route path="/" element={<MainPage />}>
           <Route path="/card/add" element={<AddTask />} />
           <Route path="/card/:id" element={<ShowCard />} />
           <Route path="/exit" element={<Logout setIsAuth={setIsAuth} />} />

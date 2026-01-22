@@ -64,30 +64,27 @@ const Auth = ({ isAuth, setIsAuth }) => {
     return isValid;
   };
 
-  // функция, которая отслеживает в полях изменения
-  // и меняет состояние компонента
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value,
+      [name]: value.trim(),
     });
     setErrors({ ...errors, [name]: false });
     setError("");
   };
 
-  // функция отправки формы
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) {
-      // если у нас форма не прошла валидацию, то дальше не продолжаем
       return;
     }
     try {
-      // чтобы не писать две разных функции, выберем нужный запрос через
-      // тернарный оператор
       const data = !isAuth
-        ? await signIn({ login: formData.login, password: formData.password })
+        ? await signIn({
+            login: formData.login,
+            password: formData.password,
+          })
         : await signUp(formData);
 
       if (data) {

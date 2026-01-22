@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import MainPage from "./pages/MainPage";
 import AddTask from "./pages/AddTask";
 import ShowCard from "./pages/ShowCard";
@@ -10,19 +10,37 @@ import NotPage from "./pages/NotPage";
 import PrivateRoute from "./components/PrivateRoute";
 
 function AppRoutes() {
-  const [isAuth, setIsAuth] = useState(false);
-  const [loading, setLoading] = useState(true);
+  let startBool;
+  const token = localStorage.getItem("tokenAuth");
+  if (!token) {
+    startBool = false;
+  } else {
+    startBool = true;
+  }
+  const [isAuth, setIsAuth] = useState(startBool);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-  }, []);
+  // useEffect(() => {
+  //   async function checkToken() {
+  //     try {
+  //       const token = localStorage.getItem("tokenAuth");
+  //       console.log(token);
+  //       if (!token) {
+  //         return setIsAuth(false);
+  //       } else {
+  //         return setIsAuth(true);
+  //       }
+  //     } catch (err) {
+  //       console.error(err.message || err.response?.data?.message);
+  //       setIsAuth(false);
+  //     }
+  //   }
+  //   checkToken();
+  // }, []);
 
   return (
     <Routes>
       <Route element={<PrivateRoute isAuth={isAuth} />}>
-        <Route path="/" element={<MainPage loading={loading} />}>
+        <Route path="/" element={<MainPage />}>
           <Route path="/card/add" element={<AddTask />} />
           <Route path="/card/:id" element={<ShowCard />} />
           <Route path="/exit" element={<Logout setIsAuth={setIsAuth} />} />

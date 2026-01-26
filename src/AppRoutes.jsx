@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import MainPage from "./pages/MainPage";
 import AddTask from "./pages/AddTask";
 import ShowCard from "./pages/ShowCard";
@@ -18,24 +18,6 @@ function AppRoutes() {
     startBool = true;
   }
   const [isAuth, setIsAuth] = useState(startBool);
-
-  // useEffect(() => {
-  //   async function checkToken() {
-  //     try {
-  //       const token = localStorage.getItem("tokenAuth");
-  //       console.log(token);
-  //       if (!token) {
-  //         return setIsAuth(false);
-  //       } else {
-  //         return setIsAuth(true);
-  //       }
-  //     } catch (err) {
-  //       console.error(err.message || err.response?.data?.message);
-  //       setIsAuth(false);
-  //     }
-  //   }
-  //   checkToken();
-  // }, []);
 
   return (
     <Routes>

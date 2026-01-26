@@ -10,17 +10,14 @@ import {
   SAuthTextBoxS,
 } from "./Auth.styled.js";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { signIn, signUp } from "../../services/auth";
+import { AuthContext } from "../../context/AuthContext.js";
 import AuthInput from "../../components/AuthInput/AuthInput.jsx";
 
 const Auth = ({ isAuth, setIsAuth }) => {
   const navigate = useNavigate();
-  const handleLogin = (e) => {
-    e.preventDefault();
-    setIsAuth(true);
-    navigate("/");
-  };
+  const { updateUserInfo } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     name: "",
     login: "",
@@ -88,11 +85,14 @@ const Auth = ({ isAuth, setIsAuth }) => {
         : await signUp(formData);
 
       if (data) {
+        updateUserInfo(data);
+        // localStorage.setItem("userInfo", JSON.stringify(data));
         setIsAuth(true);
-        localStorage.setItem("userInfo", JSON.stringify(data));
+
         navigate("/");
       }
     } catch (err) {
+      console.log("ащибка");
       setError(err.message);
     }
   };

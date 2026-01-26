@@ -4,6 +4,7 @@ import Main from "../components/Main/Main";
 import { fetchTasks } from "../services/api";
 import { useEffect, useState, useCallback } from "react";
 import { Outlet } from "react-router-dom";
+import { TasksProvider } from "../context/TaskProvider";
 
 function MainPage() {
   let tokenA = localStorage.getItem("tokenAuth");
@@ -31,15 +32,16 @@ function MainPage() {
   }, [getTasks]);
 
   return (
-    <>
+    <TasksProvider>
       <div className="wrapper">
         <Header />
         <Main error={error} tasks={tasks} loading={loading} />
         <Outlet />
       </div>
 
+      {/* !? */}
       <script src="js/script.js"></script>
-    </>
+    </TasksProvider>
   );
 }
 

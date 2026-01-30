@@ -15,26 +15,23 @@ import { signIn, signUp } from "../../services/auth";
 import { AuthContext } from "../../context/AuthContext.js";
 import AuthInput from "../../components/AuthInput/AuthInput.jsx";
 
-const Auth = ({ isAuth, setIsAuth }) => {
+const Auth = ({ isAuth }) => {
   const navigate = useNavigate();
-  const { updateUserInfo } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     name: "",
     login: "",
     password: "",
   });
 
-  // состояние ошибок
   const [errors, setErrors] = useState({
     name: "",
     login: "",
     password: "",
   });
 
-  // состояние текста ошибки, чтобы показать её пользователю
   const [error, setError] = useState("");
 
-  // функция валидации
   const validateForm = () => {
     const newErrors = { name: "", login: "", password: "" };
     let isValid = true;
@@ -85,14 +82,10 @@ const Auth = ({ isAuth, setIsAuth }) => {
         : await signUp(formData);
 
       if (data) {
-        updateUserInfo(data);
-        // localStorage.setItem("userInfo", JSON.stringify(data));
-        setIsAuth(true);
-
+        login(data);
         navigate("/");
       }
     } catch (err) {
-      console.log("ащибка");
       setError(err.message);
     }
   };

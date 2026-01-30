@@ -1,75 +1,182 @@
+import {
+  SModalTaskForm,
+  SModalFormLabel,
+  SModalFormInput,
+  SModalFormArea,
+  SModalFormCreatBtn,
+  SModalCategoriesP,
+  SModalCategoriesThemes,
+  SModalCategoriesTheme,
+  SModalCategoriesThemeP,
+  SModalTaskWrap,
+  SModalTaskClose,
+  SModalTaskTitle,
+  SModalTaskContent,
+  SModalTaskBlock,
+  SModalTaskContainer,
+  SModalTask,
+  SModalCategories,
+  SModalFormBlock,
+} from "./PopNewCard.styled";
 import Calendar from "../Calendar/Calendar";
 import { useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
+import { TaskContext } from "../../context/TaskContext";
 
 const PopNewCard = () => {
   const navigate = useNavigate();
-  function close(e) {
+
+  const { addNewTask, loadTasks } = useContext(TaskContext);
+  const now = new Date();
+
+  const [formData, setFormData] = useState({
+    title: "",
+    topic: "Research",
+    status: "Без статуса",
+    description: "",
+    date: now,
+  });
+
+  // const [errors, setErrors] = useState({
+  //   name: "",
+  //   description: "",
+  // });
+
+  const [error, setError] = useState("");
+
+  // const validateForm = () => {
+  //   const newErrors = { name: "", description: "" };
+  //   let isValid = true;
+
+  //   if (!formData.name.trim()) {
+  //     newErrors.name = true;
+  //     setError("Заполните все поля");
+  //     isValid = false;
+  //   }
+
+  //   if (!formData.description.trim()) {
+  //     newErrors.description = true;
+  //     setError("Заполните все поля");
+  //     isValid = false;
+  //   }
+
+  //   setErrors(newErrors);
+  //   return isValid;
+  // };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+    // setErrors({ ...errors, [name]: false });
+    // setError("");
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate("/");
-  }
+    if (!formData.title) {
+      setFormData((prevState) => ({
+        ...prevState,
+        title: "Новая задача",
+      }));
+    }
+    if (!formData.topic) {
+      setFormData((prevState) => ({
+        ...prevState,
+        topic: "Research",
+      }));
+    }
+    // if (!validateForm()) {
+    //   return;
+    // }
+    try {
+      const data = {
+        title: formData.title,
+        topic: formData.topic,
+        status: formData.status,
+        description: formData.description,
+        date: formData.date,
+      };
+      await addNewTask(data);
+      // if (data) {
+      //   // loadTasks();
+      //   navigate("/");
+      // }
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+  // const navigate = useNavigate();
+  // function close(e) {
+  //   e.preventDefault();
+  //   navigate("/");
+  // }
   return (
-    <div className="pop-new-card" id="popNewCard">
-      <div className="pop-new-card__container">
-        <div className="pop-new-card__block">
-          <div className="pop-new-card__content">
-            <h3 className="pop-new-card__ttl">Создание задачи</h3>
-            <a href="#" onClick={close} className="pop-new-card__close">
-              &#10006;
-            </a>
-            <div className="pop-new-card__wrap">
-              <form
-                className="pop-new-card__form form-new"
-                id="formNewCard"
-                action="#"
-              >
-                <div className="form-new__block">
-                  <label htmlFor="formTitle" className="subttl">
+    <SModalTask id="popNewCard">
+      <SModalTaskContainer>
+        <SModalTaskBlock onSubmit={handleSubmit} id="form">
+          <SModalTaskContent>
+            <SModalTaskTitle>Создание задачи</SModalTaskTitle>
+            <SModalTaskClose to="/">&#10006;</SModalTaskClose>
+            <SModalTaskWrap>
+              <SModalTaskForm>
+                <SModalFormBlock>
+                  <SModalFormLabel htmlFor="formTitle">
                     Название задачи
-                  </label>
-                  <input
-                    className="form-new__input"
+                  </SModalFormLabel>
+                  <SModalFormInput
                     type="text"
-                    name="name"
+                    name="title"
                     id="formTitle"
                     placeholder="Введите название задачи..."
+                    value={formData.title}
+                    onChange={handleChange}
                     autoFocus
                   />
-                </div>
-                <div className="form-new__block">
-                  <label htmlFor="textArea" className="subttl">
+                </SModalFormBlock>
+                <SModalFormBlock>
+                  <SModalFormLabel htmlFor="textArea">
                     Описание задачи
-                  </label>
-                  <textarea
-                    className="form-new__area"
+                  </SModalFormLabel>
+                  <SModalFormArea
                     name="text"
                     id="textArea"
                     placeholder="Введите описание задачи..."
-                  ></textarea>
-                </div>
-              </form>
+                  ></SModalFormArea>
+                </SModalFormBlock>
+              </SModalTaskForm>
               <Calendar />
-            </div>
-            <div className="pop-new-card__categories categories">
-              <p className="categories__p subttl">Категория</p>
-              <div className="categories__themes">
-                <div className="categories__theme _orange _active-category">
-                  <p className="_orange">Web Design</p>
-                </div>
-                <div className="categories__theme _green">
-                  <p className="_green">Research</p>
-                </div>
-                <div className="categories__theme _purple">
-                  <p className="_purple">Copywriting</p>
-                </div>
-              </div>
-            </div>
-            <button className="form-new__create _hover01" id="btnCreate">
+            </SModalTaskWrap>
+            <SModalCategories>
+              <SModalCategoriesP>Категория</SModalCategoriesP>
+              <SModalCategoriesThemes>
+                <SModalCategoriesTheme className="_orange _active-category">
+                  <SModalCategoriesThemeP className="_orange">
+                    Web Design
+                  </SModalCategoriesThemeP>
+                </SModalCategoriesTheme>
+                <SModalCategoriesTheme className="_green">
+                  <SModalCategoriesThemeP className="_green">
+                    Research
+                  </SModalCategoriesThemeP>
+                </SModalCategoriesTheme>
+                <SModalCategoriesTheme className="_purple">
+                  <SModalCategoriesThemeP className="_purple">
+                    Copywriting
+                  </SModalCategoriesThemeP>
+                </SModalCategoriesTheme>
+              </SModalCategoriesThemes>
+            </SModalCategories>
+            <SModalFormCreatBtn className="_hover01" id="btnCreate">
               Создать задачу
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+            </SModalFormCreatBtn>
+            <p>{error}</p>
+          </SModalTaskContent>
+        </SModalTaskBlock>
+      </SModalTaskContainer>
+    </SModalTask>
   );
 };
 

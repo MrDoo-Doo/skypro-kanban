@@ -1,13 +1,17 @@
 import Calendar from "../Calendar/Calendar";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+import { useContext } from "react";
 
-const PopExit = ({ setIsAuth }) => {
+const PopExit = () => {
   const navigate = useNavigate();
+  const { logout } = useContext(AuthContext);
 
   function handleLogout(e) {
     e.preventDefault();
     localStorage.clear();
-    setIsAuth(false);
+    logout();
+    // setIsAuth(false);
     navigate("/login");
   }
   function handleLogoutCancel(e) {

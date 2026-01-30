@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const SHeader = styled.header`
   width: 100%;
@@ -39,7 +40,7 @@ export const SHeaderBtnMainNew = styled.button`
   font-weight: 500;
   margin-right: 20px;
 `;
-export const SHeaderBtnMainNewA = styled.a`
+export const SHeaderBtnMainNewA = styled(Link)`
   color: #ffffff;
 `;
 export const SContainer = styled.div`

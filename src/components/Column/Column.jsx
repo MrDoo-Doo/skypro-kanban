@@ -11,7 +11,7 @@ const Column = ({ cardArray, columnName }) => {
         <Card
           key={card.id}
           cardTopic={card.topic}
-          cardId={card.id}
+          cardId={card._id}
           cardTitle={card.title}
           cardDate={card.date}
         />

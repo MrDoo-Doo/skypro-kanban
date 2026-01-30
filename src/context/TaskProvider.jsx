@@ -26,9 +26,10 @@ export const TasksProvider = ({ children }) => {
     loadTasks();
   }, [user.token]);
 
-  const addNewTask = async ({ task }) => {
+  const addNewTask = async (taskData) => {
+    console.log(taskData);
     try {
-      const newTask = await postTask({ token: user?.token, task });
+      const newTask = await postTask({ taskData, token: user.token });
       setTask(newTask);
     } catch (error) {
       console.error("Ошибка добавления задачи", error);
@@ -45,7 +46,9 @@ export const TasksProvider = ({ children }) => {
   };
 
   return (
-    <TaskContext.Provider value={{ tasks, setTask, loading, error }}>
+    <TaskContext.Provider
+      value={{ tasks, setTask, loading, error, addNewTask }}
+    >
       {children}
     </TaskContext.Provider>
   );

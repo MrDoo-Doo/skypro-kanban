@@ -1,7 +1,7 @@
 import Auth from "../components/Auth/Auth";
 
-const Registration = ({ setIsAuth }) => {
-  return <Auth setIsAuth={setIsAuth} isAuth={true} />;
+const Registration = () => {
+  return <Auth isAuth={true} />;
 };
 
 export default Registration;

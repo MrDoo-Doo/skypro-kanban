@@ -19,22 +19,23 @@ import {
   SModalFormBlock,
 } from "./PopNewCard.styled";
 import Calendar from "../Calendar/Calendar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { useState, useContext } from "react";
 import { TaskContext } from "../../context/TaskContext";
+import { fetchTasks } from "../../services/api";
 
 const PopNewCard = () => {
   const navigate = useNavigate();
-
-  const { addNewTask, loadTasks } = useContext(TaskContext);
-  const now = new Date();
-
+  const { getTasks } = useOutletContext();
+  const { addNewTask } = useContext(TaskContext);
+  // const now = new Date();
+  // hello();
   const [formData, setFormData] = useState({
     title: "",
     topic: "Research",
-    status: "Без статуса",
-    description: "",
-    date: now,
+    status: "Нужно сделать",
+    description: "описание",
+    date: new Date().toISOString(),
   });
 
   // const [errors, setErrors] = useState({
@@ -101,8 +102,8 @@ const PopNewCard = () => {
       };
       await addNewTask(data);
       // if (data) {
-      //   // loadTasks();
-      //   navigate("/");
+      getTasks();
+      navigate("/");
       // }
     } catch (err) {
       setError(err.message);

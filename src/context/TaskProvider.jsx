@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useCallback } from "react";
 import { fetchTasks, postTask, editTask } from "../services/api";
 import { TaskContext } from "./TaskContext";
 import { AuthContext } from "./AuthContext";
@@ -8,28 +8,52 @@ export const TasksProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const { user } = useContext(AuthContext);
+  console.log("1:", user.token);
+  let reload = true;
+
+  const loadTasks = useCallback(async () => {
+    try {
+      console.log("new");
+      const data = await fetchTasks({
+        token: user.token,
+      });
+      if (data) {
+        setTask(data);
+      }
+    } catch (error) {
+      setError(error.message);
+      console.error("Ошибка загрузки задач", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [user]);
 
   useEffect(() => {
-    const loadTasks = async () => {
-      try {
-        const data = await fetchTasks();
-        if (data) {
-          setTask(data);
-        }
-      } catch (error) {
-        setError(error.message);
-        console.error("Ошибка загрузки задач", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    loadTasks();
-  }, [user.token]);
+    if (user?.token) loadTasks();
+  }, [user, loadTasks]);
+
+  // useEffect(() => {
+  //   const loadTasks = async () => {
+  //     console.log("4:", user.token);
+  //     try {
+  //       const data = await fetchTasks(user.token);
+  //       if (data) {
+  //         setTask(data);
+  //       }
+  //     } catch (error) {
+  //       setError(error.message);
+  //       console.error("Ошибка загрузки задач", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   loadTasks();
+  // }, [user.token]);
 
   const addNewTask = async (taskData) => {
-    console.log(taskData);
     try {
-      const newTask = await postTask({ taskData, token: user.token });
+      // const newTask = await postTask({ taskData, token: user.token });
+      const newTask = await postTask(user.token, taskData);
       setTask(newTask);
     } catch (error) {
       console.error("Ошибка добавления задачи", error);
@@ -47,7 +71,7 @@ export const TasksProvider = ({ children }) => {
 
   return (
     <TaskContext.Provider
-      value={{ tasks, setTask, loading, error, addNewTask }}
+      value={{ tasks, setTask, loading, error, addNewTask, loadTasks }}
     >
       {children}
     </TaskContext.Provider>

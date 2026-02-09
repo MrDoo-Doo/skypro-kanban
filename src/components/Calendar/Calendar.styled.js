@@ -58,11 +58,12 @@ export const SCalendarDayName = styled.div`
   font-weight: 500;
   line-height: normal;
   letter-spacing: -0.2px;
+  user-select: none;
 `;
 
 export const SCalendarCells = styled.div`
   width: 182px;
-  height: 126px;
+  /* height: 126px; */
   display: flex;
   flex-wrap: wrap;
 `;
@@ -81,6 +82,9 @@ export const SCalendarCell = styled.div`
   line-height: 1;
   letter-spacing: -0.2px;
   cursor: pointer;
+
+  background-color: ${({ value }) => (value ? "#94A6BE" : "#fff")};
+  color: ${({ value }) => (value ? "#FFFFFF" : "#94a6be")};
 `;
 
 export const SNavActions = styled.div`

@@ -47,16 +47,35 @@ export const postTask = async (token, task) => {
 //   }
 // }
 
-export async function editTask({ token, id, task }) {
+export async function editTask(token, id, task) {
   try {
-    const data = await axios.patch(`${API_URL}/${id}`, task, {
+    // const data = await axios.patch(`${API_URL}/${id}`, task, {
+    const data = await axios.put(`${API_URL}/${id}`, task, {
       headers: {
-        Authorization: "Bearer " + token,
-        "Content-Type": "text/html",
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "",
       },
     });
     return data.data.tasks;
   } catch (error) {
-    throw new Error(error.message);
+    console.error(
+      "Ошибка изменения задачи:",
+      error.response?.data || error.message,
+    );
+    throw new Error(
+      error.response?.data?.error || "Не удалось изменить задачу",
+    );
   }
 }
+
+export const apiDelete = async (id, token) => {
+  try {
+    const data = await axios.delete(`${API_URL}/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return data.data.tasks;
+  } catch (error) {
+    console.error("Ошибка удаления задачи:", error.data?.data || error.message);
+    throw new Error("Не удалось удалить задачу");
+  }
+};

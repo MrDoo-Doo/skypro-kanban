@@ -20,24 +20,29 @@ import {
 } from "./PopNewCard.styled";
 import Calendar from "../Calendar/Calendar";
 import { useNavigate, useOutletContext } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { TaskContext } from "../../context/TaskContext";
-import { fetchTasks } from "../../services/api";
+// import { fetchTasks } from "../../services/api";
+// console.log(localStorage.getItem("DataTime"));
 
 const PopNewCard = () => {
   const navigate = useNavigate();
   const { getTasks } = useOutletContext();
   const { addNewTask } = useContext(TaskContext);
+  // const [fullDate, setfullDate] = useState(new Date().toISOString());
+
   // const now = new Date();
   // hello();
   const [formData, setFormData] = useState({
     title: "",
     topic: "Research",
-    status: "Нужно сделать",
-    description: "описание",
+    status: "В работе",
+    description: "",
+    // date: fullDate,
     date: new Date().toISOString(),
   });
 
+  const [activeCategory, setActiveCategory] = useState("Research");
   // const [errors, setErrors] = useState({
   //   name: "",
   //   description: "",
@@ -89,6 +94,17 @@ const PopNewCard = () => {
         topic: "Research",
       }));
     }
+    if (!formData.description) {
+      setFormData((prevState) => ({
+        ...prevState,
+        description: "Описание",
+      }));
+    }
+    // setFormData((prevState) => ({
+    //   ...prevState,
+    //   date: fullDate,
+    // }));
+    // console.log(fullDate);
     // if (!validateForm()) {
     //   return;
     // }
@@ -114,6 +130,13 @@ const PopNewCard = () => {
   //   e.preventDefault();
   //   navigate("/");
   // }
+  const handleCategoryClick = (category) => {
+    setActiveCategory(category);
+    setFormData((prevState) => ({ ...prevState, topic: category }));
+  };
+  // const ccc = () => {
+  //   console.log(fullDate);
+  // };
   return (
     <SModalTask id="popNewCard">
       <SModalTaskContainer>
@@ -142,9 +165,12 @@ const PopNewCard = () => {
                     Описание задачи
                   </SModalFormLabel>
                   <SModalFormArea
-                    name="text"
+                    type="text"
+                    name="description"
                     id="textArea"
                     placeholder="Введите описание задачи..."
+                    value={formData.description}
+                    onChange={handleChange}
                   ></SModalFormArea>
                 </SModalFormBlock>
               </SModalTaskForm>
@@ -153,26 +179,42 @@ const PopNewCard = () => {
             <SModalCategories>
               <SModalCategoriesP>Категория</SModalCategoriesP>
               <SModalCategoriesThemes>
-                <SModalCategoriesTheme className="_orange _active-category">
-                  <SModalCategoriesThemeP className="_orange">
-                    Web Design
-                  </SModalCategoriesThemeP>
+                <SModalCategoriesTheme
+                  name="topic"
+                  value="Web Design"
+                  className={
+                    activeCategory === "Web Design" ? "_active-category" : ""
+                  }
+                  onClick={() => handleCategoryClick("Web Design")}
+                >
+                  <SModalCategoriesThemeP>Web Design</SModalCategoriesThemeP>
                 </SModalCategoriesTheme>
-                <SModalCategoriesTheme className="_green">
-                  <SModalCategoriesThemeP className="_green">
-                    Research
-                  </SModalCategoriesThemeP>
+                <SModalCategoriesTheme
+                  name="topic"
+                  value="Research"
+                  className={
+                    activeCategory === "Research" ? "_active-category" : ""
+                  }
+                  onClick={() => handleCategoryClick("Research")}
+                >
+                  <SModalCategoriesThemeP>Research</SModalCategoriesThemeP>
                 </SModalCategoriesTheme>
-                <SModalCategoriesTheme className="_purple">
-                  <SModalCategoriesThemeP className="_purple">
-                    Copywriting
-                  </SModalCategoriesThemeP>
+                <SModalCategoriesTheme
+                  name="topic"
+                  value="Copywriting"
+                  className={
+                    activeCategory === "Copywriting" ? "_active-category" : ""
+                  }
+                  onClick={() => handleCategoryClick("Copywriting")}
+                >
+                  <SModalCategoriesThemeP>Copywriting</SModalCategoriesThemeP>
                 </SModalCategoriesTheme>
               </SModalCategoriesThemes>
             </SModalCategories>
             <SModalFormCreatBtn className="_hover01" id="btnCreate">
               Создать задачу
             </SModalFormCreatBtn>
+            {/* <h1 onClick={() => ccc()}>check</h1> */}
             <p>{error}</p>
           </SModalTaskContent>
         </SModalTaskBlock>

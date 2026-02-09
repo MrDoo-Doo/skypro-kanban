@@ -1,114 +1,317 @@
-import { useMemo } from "react";
+import {
+  SPopBrowse,
+  SPopBrowseContainer,
+  SPopBrowseBlock,
+  SPopBrowseContent,
+  SPopBrowseTopBlock,
+  SPopBrowseTitle,
+  SCategoriesTheme,
+  SCategoriesThemeP,
+  SThemeTop,
+  SThemeDown,
+  SStatus,
+  SStatusP,
+  SStatusThemes,
+  SStatusTheme,
+  SStatusThemeP,
+  SPopBrowseWrap,
+  SPopBrowseForm,
+  SPopFormBrowseBlock,
+  SPopFormBrowseLabel,
+  SPopFormBrowseArea,
+  SPopBrowseBtnBrowse,
+  SPopBrowseBtnEdit,
+  SPopBrowseBtnBrowseB,
+  SPopBrowseBtnEditB,
+  SBtnBg,
+  SBtnGroupBg,
+  SBtnGroupBor,
+  SBtnBgA,
+  SBtnBor,
+  SBtnBorA,
+  SBtnGroup,
+} from "./PopBrowse.styled.js";
+import { useEffect, useContext, useState } from "react";
 import Calendar from "../Calendar/Calendar";
-import { useParams, useNavigate } from "react-router-dom";
-import { cardList } from "../../data.js";
+import { useNavigate, useOutletContext } from "react-router-dom";
+// import { cardList } from "../../data.js";
+import { TaskContext } from "../../context/TaskContext";
 
-const PopBrowse = () => {
-  const { id } = useParams();
-  // if (id) console.log(id);
-  const task = useMemo(() => cardList.find((t) => t.id === id), [id]);
+const statuses = [
+  "Без статуса",
+  "Нужно сделать",
+  "В работе",
+  "Тестирование",
+  "Готово",
+];
+
+const PopBrowse = ({ task, minusTask }) => {
+  // const task = useMemo(() => cardList.find((t) => t.id === id), [id]);
   const navigate = useNavigate();
-  function close(e) {
-    e.preventDefault();
-    navigate("/");
-  }
+  const { getTasks } = useOutletContext();
+  const { updateTask, deleteTask } = useContext(TaskContext);
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [description, setDescription] = useState("");
+  const [status, setStatus] = useState("");
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [activeStatus, setActiveStatus] = useState("");
+
+  const [formData, setFormData] = useState({
+    status: status,
+    description: description,
+    date: selectedDate,
+  });
+
+  useEffect(() => {
+    if (task) {
+      setTimeout(() => {
+        setActiveStatus(task.status);
+        setDescription(task.description || "");
+        setStatus(task.status || "Без статуса");
+        setSelectedDate(task.date ? new Date(task.date) : null);
+        setIsEditing(false);
+      }, 0);
+    }
+  }, [task]);
+
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async () => {
+    // e.preventDefault();
+    if (!formData.description) {
+      setFormData((prevState) => ({
+        ...prevState,
+        description: "Описание",
+      }));
+    }
+    try {
+      const data = {
+        ...task,
+        status: formData.status,
+        description: formData.description,
+        // date: formData.date,
+      };
+      console.log(data);
+      await updateTask(data, task._id);
+      setIsEditing(false);
+      setError("");
+      getTasks();
+      navigate("/");
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  // const minusTask = async () => {
+  //   try {
+  //     await deleteTask(task._id);
+  //     setError("");
+  //     getTasks();
+  //     navigate("/");
+  //   } catch (err) {
+  //     setError(err.message);
+  //   }
+  // };
+
+  const handleStatusClick = (stat) => {
+    setActiveStatus(stat);
+    setFormData((prevState) => ({ ...prevState, status: stat }));
+  };
+  // function close(e) {
+  //   e.preventDefault();
+  //   navigate("/");
+  // }
   return (
-    <div className="pop-browse" id={task}>
-      <div className="pop-browse__container">
-        <div className="pop-browse__block">
-          <div className="pop-browse__content">
-            <div className="pop-browse__top-block">
-              <h3 className="pop-browse__ttl">Название задачи</h3>
-              <div className="categories__theme theme-top _orange _active-category">
-                <p className="_orange">Web Design</p>
-              </div>
-            </div>
-            <div className="pop-browse__status status">
-              <p className="status__p subttl">Статус {id}</p>
-              <div className="status__themes">
-                <div className="status__theme _hide">
-                  <p>Без статуса</p>
-                </div>
-                <div className="status__theme _gray">
-                  <p className="_gray">Нужно сделать</p>
-                </div>
-                <div className="status__theme _hide">
-                  <p>В работе</p>
-                </div>
-                <div className="status__theme _hide">
-                  <p>Тестирование</p>
-                </div>
-                <div className="status__theme _hide">
-                  <p>Готово</p>
-                </div>
-              </div>
-            </div>
-            <div className="pop-browse__wrap">
-              <form
-                className="pop-browse__form form-browse"
-                id="formBrowseCard"
-                action="#"
-              >
-                <div className="form-browse__block">
-                  <label htmlFor="textArea01" className="subttl">
-                    Описание задачи
-                  </label>
-                  <textarea
-                    className="form-browse__area"
-                    name="text"
-                    id="textArea01"
-                    readOnly
-                    placeholder="Введите описание задачи..."
-                  ></textarea>
-                </div>
-              </form>
-              <Calendar />
-            </div>
-            <div className="theme-down__categories theme-down">
-              <p className="categories__p subttl">Категория</p>
-              <div className="categories__theme _orange _active-category">
-                <p className="_orange">Web Design</p>
-              </div>
-            </div>
-            <div className="pop-browse__btn-browse ">
-              <div className="btn-group">
-                <button className="btn-browse__edit _btn-bor _hover03">
-                  <a href="#">Редактировать задачу</a>
-                </button>
-                <button className="btn-browse__delete _btn-bor _hover03">
-                  <a href="#">Удалить задачу</a>
-                </button>
-              </div>
-              <button
-                onClick={close}
-                className="btn-browse__close _btn-bg _hover01"
-              >
-                {/* <a href="#">Закрыть</a> */}Закрыть
-              </button>
-            </div>
-            <div className="pop-browse__btn-edit _hide">
-              <div className="btn-group">
-                <button className="btn-edit__edit _btn-bg _hover01">
-                  <a href="#">Сохранить</a>
-                </button>
-                <button className="btn-edit__edit _btn-bor _hover03">
-                  <a href="#">Отменить</a>
-                </button>
-                <button
-                  className="btn-edit__delete _btn-bor _hover03"
-                  id="btnDelete"
+    <SPopBrowse id={task}>
+      <SPopBrowseContainer>
+        <SPopBrowseBlock onSubmit={handleSubmit} id="form">
+          <SPopBrowseContent>
+            <SPopBrowseTopBlock>
+              <SPopBrowseTitle>{task.title}</SPopBrowseTitle>
+              <SThemeTop value={task.topic}>
+                <SCategoriesThemeP value={task.topic}>
+                  {task.topic}
+                </SCategoriesThemeP>
+              </SThemeTop>
+            </SPopBrowseTopBlock>
+            <SStatus>
+              <SStatusP>Статус</SStatusP>
+              <SStatusThemes>
+                <SStatusTheme
+                  name="status"
+                  value={statuses[0]}
+                  className={
+                    activeStatus === statuses[0]
+                      ? "_gray"
+                      : isEditing === false
+                        ? "_hide"
+                        : ""
+                  }
+                  onClick={() => handleStatusClick(statuses[0])}
                 >
-                  <a href="#">Удалить задачу</a>
-                </button>
-              </div>
-              <button className="btn-edit__close _btn-bg _hover01">
-                <a href="#">Закрыть</a>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+                  <SStatusThemeP
+                    className={activeStatus === statuses[0] ? "_gray" : ""}
+                  >
+                    {statuses[0]}
+                  </SStatusThemeP>
+                </SStatusTheme>
+                <SStatusTheme
+                  name="status"
+                  value={statuses[1]}
+                  className={
+                    activeStatus === statuses[1]
+                      ? "_gray"
+                      : isEditing === false
+                        ? "_hide"
+                        : ""
+                  }
+                  onClick={() => handleStatusClick(statuses[1])}
+                >
+                  <SStatusThemeP
+                    className={activeStatus === statuses[1] ? "_gray" : ""}
+                  >
+                    {statuses[1]}
+                  </SStatusThemeP>
+                </SStatusTheme>
+                <SStatusTheme
+                  name="status"
+                  value={statuses[2]}
+                  className={
+                    activeStatus === statuses[2]
+                      ? "_gray"
+                      : isEditing === false
+                        ? "_hide"
+                        : ""
+                  }
+                  onClick={() => handleStatusClick(statuses[2])}
+                >
+                  <SStatusThemeP
+                    className={activeStatus === statuses[2] ? "_gray" : ""}
+                  >
+                    {statuses[2]}
+                  </SStatusThemeP>
+                </SStatusTheme>
+                <SStatusTheme
+                  name="status"
+                  value={statuses[3]}
+                  className={
+                    activeStatus === statuses[3]
+                      ? "_gray"
+                      : isEditing === false
+                        ? "_hide"
+                        : ""
+                  }
+                  onClick={() => handleStatusClick(statuses[3])}
+                >
+                  <SStatusThemeP
+                    className={activeStatus === statuses[3] ? "_gray" : ""}
+                  >
+                    {statuses[3]}
+                  </SStatusThemeP>
+                </SStatusTheme>
+                <SStatusTheme
+                  name="status"
+                  value={statuses[4]}
+                  className={
+                    activeStatus === statuses[4]
+                      ? "_gray"
+                      : isEditing === false
+                        ? "_hide"
+                        : ""
+                  }
+                  onClick={() => handleStatusClick(statuses[4])}
+                >
+                  <SStatusThemeP
+                    className={activeStatus === statuses[4] ? "_gray" : ""}
+                  >
+                    {statuses[4]}
+                  </SStatusThemeP>
+                </SStatusTheme>
+              </SStatusThemes>
+            </SStatus>
+            <SPopBrowseWrap>
+              <SPopBrowseForm id="formBrowseCard" action="#">
+                <SPopFormBrowseBlock>
+                  <SPopFormBrowseLabel htmlFor="textArea01">
+                    Описание задачи
+                  </SPopFormBrowseLabel>
+                  <SPopFormBrowseArea
+                    type="text"
+                    name="description"
+                    id="textArea01"
+                    readOnly={isEditing === false ? true : false}
+                    placeholder="Введите описание задачи..."
+                    value={formData.description}
+                    onChange={handleChange}
+                  ></SPopFormBrowseArea>
+                </SPopFormBrowseBlock>
+              </SPopBrowseForm>
+              <Calendar />
+            </SPopBrowseWrap>
+            <SThemeDown className={"_hide"}>
+              <SStatusP>Категория</SStatusP>
+              <SCategoriesTheme value={task.topic}>
+                <SCategoriesThemeP value={task.topic}>
+                  {task.topic}
+                </SCategoriesThemeP>
+              </SCategoriesTheme>
+            </SThemeDown>
+            <SPopBrowseBtnBrowse className={isEditing === true ? "_hide" : ""}>
+              <SBtnGroup>
+                <SBtnGroupBor
+                  className="_hover03"
+                  onClick={() => setIsEditing(true)}
+                >
+                  Редактировать задачу
+                </SBtnGroupBor>
+                <SBtnGroupBor className="_hover03" onClick={minusTask}>
+                  Удалить задачу
+                </SBtnGroupBor>
+              </SBtnGroup>
+              <SBtnBg className="_hover01">
+                <SBtnBgA to={`/`}>Закрыть</SBtnBgA>
+              </SBtnBg>
+            </SPopBrowseBtnBrowse>
+            <SPopBrowseBtnEdit className={isEditing === false ? "_hide" : ""}>
+              <SBtnGroup>
+                <SBtnGroupBg
+                  className="_hover01"
+                  type="submit"
+                  onClick={handleSubmit}
+                >
+                  Сохранить
+                </SBtnGroupBg>
+                <SBtnGroupBor
+                  className="_hover03"
+                  onClick={() => setIsEditing(false)}
+                >
+                  Отменить
+                </SBtnGroupBor>
+                <SBtnGroupBor
+                  className="_hover03"
+                  id="btnDelete"
+                  onClick={minusTask}
+                >
+                  Удалить задачу
+                </SBtnGroupBor>
+              </SBtnGroup>
+              <SBtnBg className="_hover01">
+                <SBtnBgA to={`/`}>Закрыть</SBtnBgA>
+              </SBtnBg>
+            </SPopBrowseBtnEdit>
+          </SPopBrowseContent>
+        </SPopBrowseBlock>
+      </SPopBrowseContainer>
+    </SPopBrowse>
   );
 };
 

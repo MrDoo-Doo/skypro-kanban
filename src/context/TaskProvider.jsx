@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect, useCallback } from "react";
-import { fetchTasks, postTask, editTask } from "../services/api";
+import { fetchTasks, postTask, editTask, apiDelete } from "../services/api";
 import { TaskContext } from "./TaskContext";
 import { AuthContext } from "./AuthContext";
 
@@ -8,12 +8,10 @@ export const TasksProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const { user } = useContext(AuthContext);
-  console.log("1:", user.token);
   let reload = true;
 
   const loadTasks = useCallback(async () => {
     try {
-      console.log("new");
       const data = await fetchTasks({
         token: user.token,
       });
@@ -60,18 +58,36 @@ export const TasksProvider = ({ children }) => {
     }
   };
 
-  const updateTask = async ({ task, id }) => {
+  const updateTask = async (task, id) => {
     try {
-      const newTasks = await editTask({ token: user?.token, id, task });
+      const newTasks = await editTask(user.token, id, task);
       setTask(newTasks);
     } catch (error) {
       console.error("Ошибка редактирования задачи", error);
     }
   };
 
+  const deleteTask = async (id) => {
+    try {
+      await apiDelete(id, user.token);
+      setTask((prevTasks) => prevTasks.filter((task) => task._id !== id));
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   return (
     <TaskContext.Provider
-      value={{ tasks, setTask, loading, error, addNewTask, loadTasks }}
+      value={{
+        tasks,
+        setTask,
+        loading,
+        error,
+        addNewTask,
+        loadTasks,
+        updateTask,
+        deleteTask,
+      }}
     >
       {children}
     </TaskContext.Provider>

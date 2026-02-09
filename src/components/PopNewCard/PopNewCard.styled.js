@@ -187,6 +187,23 @@ export const SModalCategoriesTheme = styled.div`
   border-radius: 24px;
   margin-right: 7px;
   opacity: 0.4;
+  cursor: pointer;
+  ${({ value }) =>
+    value === "Copywriting"
+      ? "background-color: #E9D4FF"
+      : value === "Research"
+        ? "background-color: #B4FDD1"
+        : value === "Web Design"
+          ? "background-color: #FFE4C2"
+          : "background-color: #FFFFFF"};
+  ${({ value }) =>
+    value === "Copywriting"
+      ? "color: #9A48F1"
+      : value === "Research"
+        ? "color: #06B16E"
+        : value === "Web Design"
+          ? "color: #FF6D00"
+          : "color: #FFFFFF"};
 `;
 
 export const SModalCategoriesThemeP = styled.p`

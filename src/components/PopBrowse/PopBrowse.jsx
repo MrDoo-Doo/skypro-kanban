@@ -52,8 +52,8 @@ const PopBrowse = ({ task, minusTask }) => {
   const { updateTask, deleteTask } = useContext(TaskContext);
 
   const [isEditing, setIsEditing] = useState(false);
-  const [description, setDescription] = useState("");
-  const [status, setStatus] = useState("");
+  const [description, setDescription] = useState(task.description);
+  const [status, setStatus] = useState(task.status);
   const [selectedDate, setSelectedDate] = useState(null);
   const [activeStatus, setActiveStatus] = useState("");
 
@@ -67,12 +67,15 @@ const PopBrowse = ({ task, minusTask }) => {
     if (task) {
       setTimeout(() => {
         setActiveStatus(task.status);
-        setDescription(task.description || "");
+        setDescription(task.description || "Описание");
         setStatus(task.status || "Без статуса");
         setSelectedDate(task.date ? new Date(task.date) : null);
         setIsEditing(false);
       }, 0);
     }
+    console.log(formData);
+    console.log(task.status);
+    console.log(task.description);
   }, [task]);
 
   const [error, setError] = useState("");
@@ -100,7 +103,6 @@ const PopBrowse = ({ task, minusTask }) => {
         description: formData.description,
         // date: formData.date,
       };
-      console.log(data);
       await updateTask(data, task._id);
       setIsEditing(false);
       setError("");

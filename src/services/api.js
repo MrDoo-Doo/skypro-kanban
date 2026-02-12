@@ -49,7 +49,7 @@ export const postTask = async (token, task) => {
 
 export async function editTask(token, id, task) {
   try {
-    // const data = await axios.patch(`${API_URL}/${id}`, task, {
+    // const data = await axios.patch(`${API_URL}/${id}`, task, { axios.put
     const data = await axios.put(`${API_URL}/${id}`, task, {
       headers: {
         Authorization: `Bearer ${token}`,

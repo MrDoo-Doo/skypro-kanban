@@ -18,8 +18,8 @@ const ShowCard = () => {
 
   const minusTask = () => {
     deleteTask(task._id);
-    navigate("/");
     getTasks();
+    navigate("/");
   };
 
   return <PopBrowse task={task} minusTask={minusTask} />;

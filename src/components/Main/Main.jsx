@@ -9,7 +9,7 @@ const filterCards = (newCardArr, statusName) => {
 };
 
 const Main = ({ loading, error, tasks }) => {
-  console.log("Рендеринг Column, tasks:", tasks);
+  // console.log("Рендеринг Column, tasks:", tasks);
   return (
     <SMain>
       <SContainer>

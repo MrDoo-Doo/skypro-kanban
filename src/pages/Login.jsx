@@ -1,7 +1,7 @@
 import Auth from "../components/Auth/Auth";
 
-const Login = ({ setIsAuth }) => {
-  return <Auth setIsAuth={setIsAuth} isAuth={false} />;
+const Login = () => {
+  return <Auth isAuth={false} />;
 };
 
 export default Login;

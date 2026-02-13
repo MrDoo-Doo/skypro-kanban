@@ -38,7 +38,7 @@ const Header = () => {
               className="_hover01"
               id="btnMainNew"
             >
-              <SHeaderBtnMainNewA href="#popNewCard">
+              <SHeaderBtnMainNewA to="/">
                 Создать новую задачу
               </SHeaderBtnMainNewA>
             </SHeaderBtnMainNew>

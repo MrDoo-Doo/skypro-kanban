@@ -4,19 +4,24 @@ import Main from "../components/Main/Main";
 import { fetchTasks } from "../services/api";
 import { useEffect, useState, useCallback } from "react";
 import { Outlet } from "react-router-dom";
+import { TasksProvider } from "../context/TaskProvider";
 
 function MainPage() {
-  let tokenA = localStorage.getItem("tokenAuth");
-
+  const [token, setToken] = useState("");
   const [loading, setLoading] = useState(true);
   const [tasks, setTasks] = useState([]);
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    let tokenA = localStorage.getItem("tokenAuth");
+    setToken(tokenA);
+  }, []);
+
   const getTasks = useCallback(async () => {
     try {
-      setLoading(true);
+      // setLoading(true);
       const data = await fetchTasks({
-        token: tokenA,
+        token,
       });
       if (data) setTasks(data);
     } catch (err) {
@@ -24,22 +29,29 @@ function MainPage() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [token]);
 
   useEffect(() => {
-    getTasks();
-  }, [getTasks]);
+    if (token) {
+      getTasks();
+    }
+  }, [getTasks, token]);
 
+  const hello = () => {
+    console.log("hello");
+    getTasks();
+  };
   return (
-    <>
+    <TasksProvider>
       <div className="wrapper">
         <Header />
         <Main error={error} tasks={tasks} loading={loading} />
-        <Outlet />
+        <Outlet context={{ getTasks }} />
       </div>
 
-      <script src="js/script.js"></script>
-    </>
+      {/* !? */}
+      {/* <script src="js/script.js"></script> */}
+    </TasksProvider>
   );
 }
 

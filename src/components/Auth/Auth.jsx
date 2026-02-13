@@ -10,34 +10,28 @@ import {
   SAuthTextBoxS,
 } from "./Auth.styled.js";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { signIn, signUp } from "../../services/auth";
+import { AuthContext } from "../../context/AuthContext.js";
 import AuthInput from "../../components/AuthInput/AuthInput.jsx";
 
-const Auth = ({ isAuth, setIsAuth }) => {
+const Auth = ({ isAuth }) => {
   const navigate = useNavigate();
-  const handleLogin = (e) => {
-    e.preventDefault();
-    setIsAuth(true);
-    navigate("/");
-  };
+  const { login } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     name: "",
     login: "",
     password: "",
   });
 
-  // состояние ошибок
   const [errors, setErrors] = useState({
     name: "",
     login: "",
     password: "",
   });
 
-  // состояние текста ошибки, чтобы показать её пользователю
   const [error, setError] = useState("");
 
-  // функция валидации
   const validateForm = () => {
     const newErrors = { name: "", login: "", password: "" };
     let isValid = true;
@@ -88,8 +82,7 @@ const Auth = ({ isAuth, setIsAuth }) => {
         : await signUp(formData);
 
       if (data) {
-        setIsAuth(true);
-        localStorage.setItem("userInfo", JSON.stringify(data));
+        login(data);
         navigate("/");
       }
     } catch (err) {

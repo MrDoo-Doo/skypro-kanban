@@ -7,15 +7,17 @@ const Column = ({ cardArray, columnName }) => {
       <SColumnTitle>
         <SColumnTitleP>{columnName}</SColumnTitleP>
       </SColumnTitle>
-      {cardArray.map((card) => (
-        <Card
-          key={card.id}
-          cardTopic={card.topic}
-          cardId={card.id}
-          cardTitle={card.title}
-          cardDate={card.date}
-        />
-      ))}
+      <div>
+        {cardArray.map((card) => (
+          <Card
+            key={card._id}
+            cardTopic={card.topic}
+            cardId={card._id}
+            cardTitle={card.title}
+            cardDate={card.date}
+          />
+        ))}
+      </div>
     </>
   );
 };

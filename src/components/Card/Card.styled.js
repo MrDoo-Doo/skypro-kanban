@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
 export const SCards = styled.div`
-  width: 100%;
+  width: 230px;
   display: block;
   position: relative;
+  cursor: grab;
 `;
 export const SCardsItem = styled.div`
   padding: 5px;
@@ -12,6 +13,7 @@ export const SCardsItem = styled.div`
   animation-timing-function: linear;
 `;
 export const SCardsCard = styled.div`
+  isolation: isolate;
   width: 220px;
   height: 130px;
   background-color: #ffffff;
@@ -21,6 +23,10 @@ export const SCardsCard = styled.div`
   align-items: flex-start;
   justify-content: stretch;
   padding: 15px 13px 19px;
+
+  &:active {
+    opacity: 0.5;
+  }
 `;
 export const SCardGroup = styled.div`
   width: 100%;
@@ -45,10 +51,10 @@ export const SCardTheme = styled.div`
     $cardTopic === "Copywriting"
       ? "color: #9A48F1"
       : $cardTopic === "Research"
-      ? "color: #06B16E"
-      : $cardTopic === "Web Design"
-      ? "color: #FF6D00"
-      : "color: #FFFFFF"};
+        ? "color: #06B16E"
+        : $cardTopic === "Web Design"
+          ? "color: #FF6D00"
+          : "color: #FFFFFF"};
 `;
 export const SCardThemeP = styled.p`
   font-size: 10px;

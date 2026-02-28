@@ -20,55 +20,24 @@ import {
 } from "./PopNewCard.styled";
 import Calendar from "../Calendar/Calendar";
 import { useNavigate, useOutletContext } from "react-router-dom";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { TaskContext } from "../../context/TaskContext";
-// import { fetchTasks } from "../../services/api";
-// console.log(localStorage.getItem("DataTime"));
 
 const PopNewCard = () => {
   const navigate = useNavigate();
   const { getTasks } = useOutletContext();
   const { addNewTask } = useContext(TaskContext);
-  // const [fullDate, setfullDate] = useState(new Date().toISOString());
 
-  // const now = new Date();
-  // hello();
   const [formData, setFormData] = useState({
     title: "",
     topic: "Research",
     status: "В работе",
     description: "",
-    // date: fullDate,
     date: new Date().toISOString(),
   });
 
   const [activeCategory, setActiveCategory] = useState("Research");
-  // const [errors, setErrors] = useState({
-  //   name: "",
-  //   description: "",
-  // });
-
   const [error, setError] = useState("");
-
-  // const validateForm = () => {
-  //   const newErrors = { name: "", description: "" };
-  //   let isValid = true;
-
-  //   if (!formData.name.trim()) {
-  //     newErrors.name = true;
-  //     setError("Заполните все поля");
-  //     isValid = false;
-  //   }
-
-  //   if (!formData.description.trim()) {
-  //     newErrors.description = true;
-  //     setError("Заполните все поля");
-  //     isValid = false;
-  //   }
-
-  //   setErrors(newErrors);
-  //   return isValid;
-  // };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -76,8 +45,6 @@ const PopNewCard = () => {
       ...formData,
       [name]: value,
     });
-    // setErrors({ ...errors, [name]: false });
-    // setError("");
   };
 
   const handleSubmit = async (e) => {
@@ -100,14 +67,6 @@ const PopNewCard = () => {
         description: "Описание",
       }));
     }
-    // setFormData((prevState) => ({
-    //   ...prevState,
-    //   date: fullDate,
-    // }));
-    // console.log(fullDate);
-    // if (!validateForm()) {
-    //   return;
-    // }
     try {
       const data = {
         title: formData.title,
@@ -117,26 +76,16 @@ const PopNewCard = () => {
         date: formData.date,
       };
       await addNewTask(data);
-      // if (data) {
       getTasks();
       navigate("/");
-      // }
     } catch (err) {
       setError(err.message);
     }
   };
-  // const navigate = useNavigate();
-  // function close(e) {
-  //   e.preventDefault();
-  //   navigate("/");
-  // }
   const handleCategoryClick = (category) => {
     setActiveCategory(category);
     setFormData((prevState) => ({ ...prevState, topic: category }));
   };
-  // const ccc = () => {
-  //   console.log(fullDate);
-  // };
   return (
     <SModalTask id="popNewCard">
       <SModalTaskContainer>
@@ -214,7 +163,6 @@ const PopNewCard = () => {
             <SModalFormCreatBtn className="_hover01" id="btnCreate">
               Создать задачу
             </SModalFormCreatBtn>
-            {/* <h1 onClick={() => ccc()}>check</h1> */}
             <p>{error}</p>
           </SModalTaskContent>
         </SModalTaskBlock>

@@ -17,7 +17,6 @@ export const SAuthBack = styled.div`
 
 export const SAuthForm = styled.form`
   width: 368px;
-  /* height: 329px; */
   display: flex;
   flex-direction: column;
   align-items: center;

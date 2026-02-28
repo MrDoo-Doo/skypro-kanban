@@ -18,7 +18,6 @@ export const SCalendarTitle = styled.p`
   line-height: 1;
 `;
 
-// className="pop-new-card__calendar calendar"
 export const SCalendarBlock = styled.div`
   display: block;
 `;
@@ -63,7 +62,6 @@ export const SCalendarDayName = styled.div`
 
 export const SCalendarCells = styled.div`
   width: 182px;
-  /* height: 126px; */
   display: flex;
   flex-wrap: wrap;
 `;

@@ -19,7 +19,6 @@ function MainPage() {
 
   const getTasks = useCallback(async () => {
     try {
-      // setLoading(true);
       const data = await fetchTasks({
         token,
       });
@@ -37,20 +36,18 @@ function MainPage() {
     }
   }, [getTasks, token]);
 
-  const hello = () => {
-    console.log("hello");
-    getTasks();
-  };
   return (
     <TasksProvider>
       <div className="wrapper">
         <Header />
-        <Main error={error} tasks={tasks} loading={loading} />
+        <Main
+          error={error}
+          tasks={tasks}
+          loading={loading}
+          getTasks={getTasks}
+        />
         <Outlet context={{ getTasks }} />
       </div>
-
-      {/* !? */}
-      {/* <script src="js/script.js"></script> */}
     </TasksProvider>
   );
 }

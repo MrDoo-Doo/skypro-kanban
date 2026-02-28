@@ -34,7 +34,6 @@ import {
 import { useEffect, useContext, useState } from "react";
 import Calendar from "../Calendar/Calendar";
 import { useNavigate, useOutletContext } from "react-router-dom";
-// import { cardList } from "../../data.js";
 import { TaskContext } from "../../context/TaskContext";
 
 const statuses = [
@@ -46,10 +45,9 @@ const statuses = [
 ];
 
 const PopBrowse = ({ task, minusTask }) => {
-  // const task = useMemo(() => cardList.find((t) => t.id === id), [id]);
   const navigate = useNavigate();
   const { getTasks } = useOutletContext();
-  const { updateTask, deleteTask } = useContext(TaskContext);
+  const { updateTask } = useContext(TaskContext);
 
   const [isEditing, setIsEditing] = useState(false);
   const [description, setDescription] = useState(task.description);
@@ -73,9 +71,6 @@ const PopBrowse = ({ task, minusTask }) => {
         setIsEditing(false);
       }, 0);
     }
-    console.log(formData);
-    console.log(task.status);
-    console.log(task.description);
   }, [task]);
 
   const [error, setError] = useState("");
@@ -89,7 +84,6 @@ const PopBrowse = ({ task, minusTask }) => {
   };
 
   const handleSubmit = async () => {
-    // e.preventDefault();
     if (!formData.description) {
       setFormData((prevState) => ({
         ...prevState,
@@ -101,7 +95,6 @@ const PopBrowse = ({ task, minusTask }) => {
         ...task,
         status: formData.status,
         description: formData.description,
-        // date: formData.date,
       };
       await updateTask(data, task._id);
       setIsEditing(false);
@@ -113,25 +106,10 @@ const PopBrowse = ({ task, minusTask }) => {
     }
   };
 
-  // const minusTask = async () => {
-  //   try {
-  //     await deleteTask(task._id);
-  //     setError("");
-  //     getTasks();
-  //     navigate("/");
-  //   } catch (err) {
-  //     setError(err.message);
-  //   }
-  // };
-
   const handleStatusClick = (stat) => {
     setActiveStatus(stat);
     setFormData((prevState) => ({ ...prevState, status: stat }));
   };
-  // function close(e) {
-  //   e.preventDefault();
-  //   navigate("/");
-  // }
   return (
     <SPopBrowse id={task}>
       <SPopBrowseContainer>

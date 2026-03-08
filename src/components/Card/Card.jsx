@@ -20,7 +20,6 @@ const Card = ({
   cardTitle,
   cardId,
   cardTopic,
-  cardStatus,
   setCurrentCard,
   setShowBlock,
 }) => {

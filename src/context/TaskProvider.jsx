@@ -32,6 +32,7 @@ export const TasksProvider = ({ children }) => {
   const addNewTask = async (taskData) => {
     try {
       const newTask = await postTask(user.token, taskData);
+      console.log(newTask);
       setTask(newTask);
     } catch (error) {
       console.error("Ошибка добавления задачи", error);

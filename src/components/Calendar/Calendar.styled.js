@@ -83,6 +83,10 @@ export const SCalendarCell = styled.div`
 
   background-color: ${({ value }) => (value ? "#94A6BE" : "#fff")};
   color: ${({ value }) => (value ? "#FFFFFF" : "#94a6be")};
+
+  &:hover {
+    background: #eaeef6;
+  }
 `;
 
 export const SNavActions = styled.div`

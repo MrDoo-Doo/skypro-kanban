@@ -15,7 +15,6 @@ const filterCards = (newCardArr, statusName) => {
 const Main = ({ loading, error, tasks, getTasks }) => {
   const navigate = useNavigate();
   const { updateTask } = useContext(TaskContext);
-
   const [currentCard, setCurrentCard] = useState(null);
   const [showBlock, setShowBlock] = useState(false);
   const [errorMain, setError] = useState("");
@@ -40,42 +39,43 @@ const Main = ({ loading, error, tasks, getTasks }) => {
       setError(err.message);
     }
   };
+
+  if (errorMain) {
+    console.log(errorMain);
+  }
+  if (error) {
+    console.log(error);
+  }
+
   return (
     <SMain>
       <SContainer>
         <SMainBlock>
           <SMainContent>
-            {loading ? (
-              <h1>Данные загружаются</h1>
-            ) : (
-              <>
-                {columnList.map((column) => (
-                  <SMainColumn key={column.id}>
-                    <Column
-                      column={column}
-                      cardArray={filterCards(tasks, column.name)}
-                      columnName={column.name}
-                      setShowBlock={setShowBlock}
-                      setCurrentCard={setCurrentCard}
-                    />
-                    <SpaceForDrop
-                      showBlock={showBlock}
-                      onDropFun={() =>
-                        onDropFun(
-                          column.name,
-                          filterCards(tasks, column.name).length + 1,
-                        )
-                      }
-                    />
-                  </SMainColumn>
-                ))}
-              </>
-            )}
+            {columnList.map((column) => (
+              <SMainColumn key={column.id}>
+                <Column
+                  column={column}
+                  cardArray={filterCards(tasks, column.name)}
+                  columnName={column.name}
+                  setShowBlock={setShowBlock}
+                  setCurrentCard={setCurrentCard}
+                  loading={loading}
+                />
+                <SpaceForDrop
+                  showBlock={showBlock}
+                  onDropFun={() =>
+                    onDropFun(
+                      column.name,
+                      filterCards(tasks, column.name).length + 1,
+                    )
+                  }
+                />
+              </SMainColumn>
+            ))}
           </SMainContent>
         </SMainBlock>
-        <p>{error}</p>
       </SContainer>
-      <h1>#{currentCard}</h1>
     </SMain>
   );
 };

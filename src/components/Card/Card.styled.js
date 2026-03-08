@@ -36,11 +36,13 @@ export const SCardGroup = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
+
 export const colors = {
   Copywriting: "#E9D4FF",
   Research: "#B4FDD1",
   "Web Design": "#FFE4C2",
 };
+
 export const SCardTheme = styled.div`
   width: auto;
   height: 20px;
@@ -54,7 +56,13 @@ export const SCardTheme = styled.div`
         ? "color: #06B16E"
         : $cardTopic === "Web Design"
           ? "color: #FF6D00"
-          : "color: #FFFFFF"};
+          : "color: #ffffff"};
+`;
+export const SCardThemeEmpty = styled.div`
+  width: 82px;
+  height: 20px;
+  border-radius: 18px;
+  background-image: linear-gradient(to right, #c1cddc, #e9eef7, #c1cddc);
 `;
 export const SCardThemeP = styled.p`
   font-size: 10px;
@@ -68,6 +76,11 @@ export const SCardBtn = styled.div`
   align-items: center;
   justify-content: space-around;
   padding: 2px;
+`;
+export const SCardBtnEmpty = styled.div`
+  width: 18px;
+  height: 4px;
+  background-image: linear-gradient(to right, #c1cddc, #e9eef7, #c1cddc);
 `;
 export const SCardBtnDIV = styled.div`
   width: 4px;
@@ -89,10 +102,20 @@ export const SCardContent = styled.div`
   align-items: flex-start;
   justify-content: space-between;
 `;
+export const SCardTitleEmpty = styled.div`
+  height: 13px;
+  width: 113px;
+  background-image: linear-gradient(to right, #c1cddc, #e9eef7, #c1cddc);
+`;
 export const SCardDate = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
+`;
+export const SCardDateEmpty = styled.div`
+  width: 58px;
+  height: 13px;
+  background-image: linear-gradient(to right, #c1cddc, #e9eef7, #c1cddc);
 `;
 export const SCardDateSVG = styled.svg`
   width: 13px;

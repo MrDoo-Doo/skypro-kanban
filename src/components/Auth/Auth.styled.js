@@ -46,9 +46,12 @@ export const SAuthInputBox = styled.div`
 export const SAuthInput = styled.input`
   width: 248px;
   height: 30px;
-  border: 0.7px solid #94a6be66;
   border-radius: 8px;
   padding: 8px 10px;
+  ${({ $error }) =>
+    !$error
+      ? "border: 0.7px solid #94a6be66;"
+      : "border: 0.7px solid #df1c3666;"};
 `;
 
 export const SAuthBuuton = styled.button`
@@ -92,4 +95,9 @@ export const SAuthTextA = styled(Link)`
   text-align: center;
   color: #94a6be66;
   text-decoration: underline;
+`;
+
+export const SError = styled.p`
+  color: red;
+  font-size: 14px;
 `;

@@ -27,13 +27,14 @@ const PopNewCard = () => {
   const navigate = useNavigate();
   const { getTasks } = useOutletContext();
   const { addNewTask } = useContext(TaskContext);
+  // const [dataCreate, setDataCreate] = useState(new Date().toISOString());
 
   const [formData, setFormData] = useState({
     title: "",
     topic: "Research",
-    status: "В работе",
+    status: "Без статуса",
     description: "",
-    date: new Date().toISOString(),
+    date: "",
   });
 
   const [activeCategory, setActiveCategory] = useState("Research");
@@ -67,19 +68,28 @@ const PopNewCard = () => {
         description: "Описание",
       }));
     }
+    // let i = localStorage.getItem("pickedDate");
+    //   console.log("TEST", i);
+    // console.log("TEST", localStorage.getItem("pickedDate"));
+    let dataCreate = new Date().toISOString();
+    if (localStorage.getItem("pickedDate")) {
+      dataCreate = localStorage.getItem("pickedDate");
+    }
     try {
       const data = {
         title: formData.title,
         topic: formData.topic,
         status: formData.status,
         description: formData.description,
-        date: formData.date,
+        date: dataCreate,
       };
       await addNewTask(data);
       getTasks();
       navigate("/");
     } catch (err) {
       setError(err.message);
+    } finally {
+      localStorage.removeItem("pickedDate");
     }
   };
   const handleCategoryClick = (category) => {
@@ -123,7 +133,8 @@ const PopNewCard = () => {
                   ></SModalFormArea>
                 </SModalFormBlock>
               </SModalTaskForm>
-              <Calendar />
+              <Calendar able={true} />
+              {/* <Calendar setDataCreate={setDataCreate} /> */}
             </SModalTaskWrap>
             <SModalCategories>
               <SModalCategoriesP>Категория</SModalCategoriesP>

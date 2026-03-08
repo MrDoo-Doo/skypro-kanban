@@ -20,7 +20,14 @@ import {
 import { useEffect, useState } from "react";
 import React from "react";
 
-const Calendar = () => {
+const dateFormatUTC = (simplyDate) => {
+  const parts = simplyDate.split(".").map(Number);
+  const [day, month, year] = parts;
+  const isoDate = new Date(Date.UTC(year, month - 1, day));
+  return isoDate.toISOString();
+};
+
+const Calendar = ({ able }) => {
   const months = [
     "Январь",
     "Февраль",
@@ -230,6 +237,20 @@ const Calendar = () => {
     setSelectedIndex(index);
     setSelectedDate(value);
   };
+  useEffect(() => {
+    if (selectedDate) {
+      // setDataCreate(
+      //   dateFormatUTC(`${selectedDate}.${currentMonth + 1}.${currentYear}`),
+      // );
+      localStorage.setItem(
+        "pickedDate",
+        dateFormatUTC(`${selectedDate}.${currentMonth + 1}.${currentYear}`),
+      );
+      console.log(
+        dateFormatUTC(`${selectedDate}.${currentMonth + 1}.${currentYear}`),
+      );
+    }
+  }, [selectedDate]);
 
   // useEffect(() => {
   //   setTimeout(() => {
@@ -248,7 +269,7 @@ const Calendar = () => {
   return (
     <SCalendar>
       <SCalendarTitle>Даты</SCalendarTitle>
-      <SCalendarBlock>
+      <SCalendarBlock style={{ pointerEvents: able ? "painted" : "none" }}>
         <SCalendarNav>
           <SCalendarMonth>{`${months[currentMonth]} ${currentYear}`}</SCalendarMonth>
           <SNavActions>

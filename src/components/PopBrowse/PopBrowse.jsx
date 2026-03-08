@@ -21,14 +21,10 @@ import {
   SPopFormBrowseArea,
   SPopBrowseBtnBrowse,
   SPopBrowseBtnEdit,
-  SPopBrowseBtnBrowseB,
-  SPopBrowseBtnEditB,
   SBtnBg,
   SBtnGroupBg,
   SBtnGroupBor,
   SBtnBgA,
-  SBtnBor,
-  SBtnBorA,
   SBtnGroup,
 } from "./PopBrowse.styled.js";
 import { useEffect, useContext, useState } from "react";
@@ -50,8 +46,8 @@ const PopBrowse = ({ task, minusTask }) => {
   const { updateTask } = useContext(TaskContext);
 
   const [isEditing, setIsEditing] = useState(false);
-  const [description, setDescription] = useState(task.description);
-  const [status, setStatus] = useState(task.status);
+  const [description, setDescription] = useState("");
+  const [status, setStatus] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
   const [activeStatus, setActiveStatus] = useState("");
 
@@ -110,6 +106,11 @@ const PopBrowse = ({ task, minusTask }) => {
     setActiveStatus(stat);
     setFormData((prevState) => ({ ...prevState, status: stat }));
   };
+
+  if (error) {
+    console.log(error);
+  }
+
   return (
     <SPopBrowse id={task}>
       <SPopBrowseContainer>
@@ -235,7 +236,8 @@ const PopBrowse = ({ task, minusTask }) => {
                   ></SPopFormBrowseArea>
                 </SPopFormBrowseBlock>
               </SPopBrowseForm>
-              <Calendar />
+              {/* <Calendar setDataCreate={setSelectedDate} /> */}
+              <Calendar able={isEditing} />
             </SPopBrowseWrap>
             <SThemeDown className={"_hide"}>
               <SStatusP>Категория</SStatusP>

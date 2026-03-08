@@ -25,7 +25,7 @@ export async function signUp({ name, login, password }) {
         headers: {
           "Content-Type": "",
         },
-      }
+      },
     );
     localStorage.setItem("tokenAuth", data.data.user.token);
     return data.data.user;

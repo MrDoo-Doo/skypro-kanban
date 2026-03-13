@@ -2,19 +2,22 @@ import styled from "styled-components";
 
 export const SMain = styled.main`
   width: 100%;
-  background-color: #eaeef6;
+  background-color: ${({ theme }) => theme.background.main};
   height: calc(100vh - 70px);
 `;
+
 export const SMainBlock = styled.div`
   width: 100%;
   margin: 0 auto;
   padding: 25px 0 49px;
 `;
+
 export const SMainContent = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
 `;
+
 export const SMainColumn = styled.div`
   width: 20%;
   margin: 0 auto;

@@ -40,15 +40,22 @@ const statuses = [
   "Готово",
 ];
 
+const localeDate = () => {
+  const nowDate = new Date();
+  const difTime = nowDate.getTimezoneOffset() * 60000;
+  const actualDate = new Date(Date.now() - difTime).toISOString();
+  return actualDate;
+};
+
 const PopBrowse = ({ task, minusTask }) => {
   const navigate = useNavigate();
   const { getTasks } = useOutletContext();
   const { updateTask } = useContext(TaskContext);
 
   const [isEditing, setIsEditing] = useState(false);
-  const [description, setDescription] = useState("");
-  const [status, setStatus] = useState("");
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [description, setDescription] = useState(task.description);
+  const [status, setStatus] = useState(task.status);
+  const [selectedDate, setSelectedDate] = useState(task.date);
   const [activeStatus, setActiveStatus] = useState("");
 
   const [formData, setFormData] = useState({
@@ -86,11 +93,16 @@ const PopBrowse = ({ task, minusTask }) => {
         description: "Описание",
       }));
     }
+    let dataCreate = localeDate();
+    if (localStorage.getItem("pickedDate")) {
+      dataCreate = localStorage.getItem("pickedDate");
+    }
     try {
       const data = {
         ...task,
         status: formData.status,
         description: formData.description,
+        date: dataCreate,
       };
       await updateTask(data, task._id);
       setIsEditing(false);
@@ -236,8 +248,7 @@ const PopBrowse = ({ task, minusTask }) => {
                   ></SPopFormBrowseArea>
                 </SPopFormBrowseBlock>
               </SPopBrowseForm>
-              {/* <Calendar setDataCreate={setSelectedDate} /> */}
-              <Calendar able={isEditing} />
+              <Calendar able={isEditing} dataDate={selectedDate} />
             </SPopBrowseWrap>
             <SThemeDown className={"_hide"}>
               <SStatusP>Категория</SStatusP>

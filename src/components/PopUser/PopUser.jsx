@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const PopUser = () => {
   const [modalWin, setModalWin] = useState(false);
-
+  const { theme, toggleTheme } = useContext(ThemeContext);
+  const isDark = theme === "dark";
   const changeModal = () => {
     if (modalWin === true) {
       setModalWin(false);
@@ -40,7 +42,13 @@ const PopUser = () => {
         <p className="pop-user-set__mail">ivan.ivanov@gmail.com</p>
         <div className="pop-user-set__theme">
           <p>Темная тема</p>
-          <input type="checkbox" className="checkbox" name="checkbox" />
+          <input
+            type="checkbox"
+            className="checkbox"
+            name="checkbox"
+            checked={isDark}
+            onChange={toggleTheme}
+          />
         </div>
         <button onClick={exit} type="button" className="_hover03">
           {/* <Link to="/exit">Выйти</Link> */}

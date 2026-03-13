@@ -12,7 +12,7 @@ export const SCalendar = styled(SPopNewCardCalendar)`
 export const SCalendarTitle = styled.p`
   margin-bottom: 14px;
   padding: 0 7px;
-  color: #000;
+  color: ${({ theme }) => theme.color.formTask};
   font-size: 14px;
   font-weight: 600;
   line-height: 1;
@@ -79,13 +79,15 @@ export const SCalendarCell = styled.div`
   font-size: 10px;
   line-height: 1;
   letter-spacing: -0.2px;
-  cursor: pointer;
-
-  background-color: ${({ value }) => (value ? "#94A6BE" : "#fff")};
-  color: ${({ value }) => (value ? "#FFFFFF" : "#94a6be")};
+  background: ${({ theme }) => theme.background.formTask};
+  color: ${({ value, theme }) => (value ? theme.color.calendar : "#94a6be")};
+  background: ${({ value, theme }) =>
+    !value ? theme.background.calendar : "#94a6be"};
+  cursor: ${({ inData }) => (inData ? "pointer" : "")};
 
   &:hover {
-    background: #eaeef6;
+    background: ${({ inData, theme }) =>
+      inData ? theme.background.cellHover : ""};
   }
 `;
 
@@ -119,5 +121,5 @@ export const SCalendarP = styled.p`
 `;
 
 export const SCalendarPSpan = styled.span`
-  color: #000000;
+  color: ${({ theme }) => theme.color.formTask};
 `;

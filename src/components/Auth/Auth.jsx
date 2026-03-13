@@ -90,6 +90,7 @@ const Auth = ({ isAuth }) => {
       setError(err.message);
     }
   };
+
   return (
     <SAuthBack>
       <SAuthForm onSubmit={handleSubmit} id="form">

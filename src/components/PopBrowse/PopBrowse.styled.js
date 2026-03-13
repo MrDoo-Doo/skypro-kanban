@@ -31,12 +31,12 @@ export const SPopBrowseContainer = styled.div`
 export const SPopBrowseBlock = styled.div`
   display: block;
   margin: 0 auto;
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.background.formTask};
   max-width: 630px;
   width: 100%;
   padding: 40px 30px 38px;
   border-radius: 10px;
-  border: 0.7px solid #d4dbe5;
+  border: 0.7px solid ${({ theme }) => theme.border.formTask};
   position: relative;
 `;
 
@@ -53,7 +53,7 @@ export const SPopBrowseTopBlock = styled.div`
 `;
 
 export const SPopBrowseTitle = styled.h3`
-  color: #000;
+  color: ${({ theme }) => theme.color.formTask};
   font-size: 20px;
   font-weight: 600;
   line-height: 24px;
@@ -121,7 +121,7 @@ export const SStatus = styled.div`
 `;
 
 export const SStatusP = styled.p`
-  color: #000;
+  color: ${({ theme }) => theme.color.formTask};
   font-size: 14px;
   font-weight: 600;
   line-height: 1;
@@ -170,7 +170,7 @@ export const SPopFormBrowseBlock = styled.div`
 `;
 
 export const SPopFormBrowseLabel = styled.label`
-  color: #000;
+  color: ${({ theme }) => theme.color.formTask};
   font-size: 14px;
   font-weight: 600;
   line-height: 1;
@@ -181,7 +181,7 @@ export const SPopFormBrowseArea = styled.textarea`
   width: 100%;
   outline: none;
   padding: 14px;
-  background: #eaeef6;
+  color: ${({ theme }) => theme.color.formTask};
   border: 0.7px solid rgba(148, 166, 190, 0.4);
   border-radius: 8px;
   font-size: 14px;
@@ -189,6 +189,9 @@ export const SPopFormBrowseArea = styled.textarea`
   letter-spacing: -0.14px;
   margin-top: 14px;
   height: 200px;
+
+  background: ${({ theme, readOnly }) =>
+    readOnly ? theme.background.description : theme.background.formTask};
 
   &::placeholder {
     font-weight: 400;
@@ -251,10 +254,10 @@ export const SBtnBgA = styled(Link)`
 
 export const SBtnBor = styled(SPopBrowseBtnEditB)`
   border-radius: 4px;
-  border: 0.7px solid var(--palette-navy-60, #565eef);
+  border: 0.7px solid ${({ theme }) => theme.button.formTask};
   outline: none;
   background: transparent;
-  color: #565eef;
+  color: ${({ theme }) => theme.button.formTask};
   margin-right: 8px;
 `;
 

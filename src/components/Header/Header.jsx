@@ -10,9 +10,13 @@ import {
   SContainer,
 } from "./Header.styled.js";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const Header = () => {
   const navigate = useNavigate();
+  const { theme } = useContext(ThemeContext);
+  const isDark = theme === "dark";
 
   function createTask(e) {
     e.preventDefault();
@@ -24,7 +28,10 @@ const Header = () => {
         <SHeaderBlock>
           <SHeaderLogo className="_show _light">
             <a href="" target="_self">
-              <SHeaderLogoIMG src="images/logo.png" alt="logo" />
+              <SHeaderLogoIMG
+                src={isDark ? "images/logo_dark.png" : "images/logo.png"}
+                alt="logo"
+              />
             </a>
           </SHeaderLogo>
           <SHeaderLogo className="_dark">

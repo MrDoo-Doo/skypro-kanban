@@ -26,6 +26,7 @@ const Column = ({
     Готово: 1,
   };
   const skeletonCount = skeletonCountByStatus[columnName] || 2;
+
   return (
     <>
       <SColumnTitle>

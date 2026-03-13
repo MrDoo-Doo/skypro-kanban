@@ -27,12 +27,12 @@ export const SModalTaskContainer = styled.div`
 export const SModalTaskBlock = styled.form`
   display: block;
   margin: 0 auto;
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.background.formTask};
   max-width: 630px;
   width: 100%;
   padding: 40px 30px 48px;
   border-radius: 10px;
-  border: 0.7px solid #d4dbe5;
+  border: 0.7px solid ${({ theme }) => theme.border.formTask};
   position: relative;
 `;
 
@@ -42,7 +42,7 @@ export const SModalTaskContent = styled.div`
 `;
 
 export const SModalTaskTitle = styled.h3`
-  color: #000;
+  color: ${({ theme }) => theme.color.formTask};
   font-size: 20px;
   font-weight: 600;
   line-height: 24px;
@@ -80,7 +80,7 @@ export const SModalFormBlock = styled.div`
 `;
 
 export const SModalFormLabel = styled.label`
-  color: #000;
+  color: ${({ theme }) => theme.color.formTask};
   font-size: 14px;
   font-weight: 600;
   line-height: 1;
@@ -128,6 +128,7 @@ export const SModalFormArea = styled.textarea`
   font-size: 14px;
   line-height: 1;
   letter-spacing: -0.14px;
+  color: ${({ theme }) => theme.color.formTask};
 
   &::-moz-placeholder {
     font-weight: 400;
@@ -166,7 +167,7 @@ export const SModalCategories = styled.div`
 
 export const SModalCategoriesP = styled.p`
   margin-bottom: 14px;
-  color: #000;
+  color: ${({ theme }) => theme.color.formTask};
   font-size: 14px;
   font-weight: 600;
   line-height: 1;

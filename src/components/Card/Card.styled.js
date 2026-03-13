@@ -6,17 +6,19 @@ export const SCards = styled.div`
   position: relative;
   cursor: grab;
 `;
+
 export const SCardsItem = styled.div`
   padding: 5px;
   animation-name: card-animation;
   animation-duration: 500ms;
   animation-timing-function: linear;
 `;
+
 export const SCardsCard = styled.div`
   isolation: isolate;
   width: 220px;
   height: 130px;
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.background.card};
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -28,6 +30,7 @@ export const SCardsCard = styled.div`
     opacity: 0.5;
   }
 `;
+
 export const SCardGroup = styled.div`
   width: 100%;
   height: 20px;
@@ -58,17 +61,20 @@ export const SCardTheme = styled.div`
           ? "color: #FF6D00"
           : "color: #ffffff"};
 `;
+
 export const SCardThemeEmpty = styled.div`
   width: 82px;
   height: 20px;
   border-radius: 18px;
   background-image: linear-gradient(to right, #c1cddc, #e9eef7, #c1cddc);
 `;
+
 export const SCardThemeP = styled.p`
   font-size: 10px;
   font-weight: 600;
   line-height: 10px;
 `;
+
 export const SCardBtn = styled.div`
   width: 24px;
   height: 24px;
@@ -77,24 +83,28 @@ export const SCardBtn = styled.div`
   justify-content: space-around;
   padding: 2px;
 `;
+
 export const SCardBtnEmpty = styled.div`
   width: 18px;
   height: 4px;
   background-image: linear-gradient(to right, #c1cddc, #e9eef7, #c1cddc);
 `;
+
 export const SCardBtnDIV = styled.div`
   width: 4px;
   height: 4px;
   border-radius: 50%;
   background-color: #94a6be;
 `;
+
 export const SCardTitle = styled.h3`
   font-size: 14px;
   font-weight: 500;
   line-height: 18px;
-  color: #000000;
+  color: ${({ theme }) => theme.color.card};
   margin-bottom: 10px;
 `;
+
 export const SCardContent = styled.div`
   height: 64px;
   display: flex;
@@ -102,24 +112,29 @@ export const SCardContent = styled.div`
   align-items: flex-start;
   justify-content: space-between;
 `;
+
 export const SCardTitleEmpty = styled.div`
   height: 13px;
   width: 113px;
   background-image: linear-gradient(to right, #c1cddc, #e9eef7, #c1cddc);
 `;
+
 export const SCardDate = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
 `;
+
 export const SCardDateEmpty = styled.div`
   width: 58px;
   height: 13px;
   background-image: linear-gradient(to right, #c1cddc, #e9eef7, #c1cddc);
 `;
+
 export const SCardDateSVG = styled.svg`
   width: 13px;
 `;
+
 export const SCardDateP = styled.p`
   margin-left: 6px;
   font-size: 10px;

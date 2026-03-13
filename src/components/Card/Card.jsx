@@ -31,6 +31,7 @@ const Card = ({
     setShowBlock(false);
     setCurrentCard(null);
   };
+
   return (
     <SCards key={cardId}>
       <SCardsItem>
@@ -38,7 +39,6 @@ const Card = ({
           className="card"
           draggable={true}
           onDragStart={onDragStartFun}
-          onDrop={() => console.log("exit")}
           onDragEnd={onDragEndFun}
         >
           <SCardGroup>

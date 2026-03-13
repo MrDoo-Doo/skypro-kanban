@@ -23,11 +23,17 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import { useState, useContext } from "react";
 import { TaskContext } from "../../context/TaskContext";
 
+const localeDate = () => {
+  const nowDate = new Date();
+  const difTime = nowDate.getTimezoneOffset() * 60000;
+  const actualDate = new Date(Date.now() - difTime).toISOString();
+  return actualDate;
+};
+
 const PopNewCard = () => {
   const navigate = useNavigate();
   const { getTasks } = useOutletContext();
   const { addNewTask } = useContext(TaskContext);
-  // const [dataCreate, setDataCreate] = useState(new Date().toISOString());
 
   const [formData, setFormData] = useState({
     title: "",
@@ -68,10 +74,7 @@ const PopNewCard = () => {
         description: "Описание",
       }));
     }
-    // let i = localStorage.getItem("pickedDate");
-    //   console.log("TEST", i);
-    // console.log("TEST", localStorage.getItem("pickedDate"));
-    let dataCreate = new Date().toISOString();
+    let dataCreate = localeDate();
     if (localStorage.getItem("pickedDate")) {
       dataCreate = localStorage.getItem("pickedDate");
     }
@@ -92,10 +95,12 @@ const PopNewCard = () => {
       localStorage.removeItem("pickedDate");
     }
   };
+
   const handleCategoryClick = (category) => {
     setActiveCategory(category);
     setFormData((prevState) => ({ ...prevState, topic: category }));
   };
+
   return (
     <SModalTask id="popNewCard">
       <SModalTaskContainer>
@@ -133,8 +138,7 @@ const PopNewCard = () => {
                   ></SModalFormArea>
                 </SModalFormBlock>
               </SModalTaskForm>
-              <Calendar able={true} />
-              {/* <Calendar setDataCreate={setDataCreate} /> */}
+              <Calendar able={true} dataDate={localeDate()} />
             </SModalTaskWrap>
             <SModalCategories>
               <SModalCategoriesP>Категория</SModalCategoriesP>

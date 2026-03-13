@@ -19,9 +19,8 @@ const Main = ({ loading, error, tasks, getTasks }) => {
   const [showBlock, setShowBlock] = useState(false);
   const [errorMain, setError] = useState("");
 
-  const onDropFun = (statusNew, index) => {
+  const onDropFun = (statusNew) => {
     const task = tasks.find((task) => String(task._id) === currentCard);
-    console.log(status, index);
     DragDrop(task, statusNew);
   };
 
@@ -64,18 +63,14 @@ const Main = ({ loading, error, tasks, getTasks }) => {
                 />
                 <SpaceForDrop
                   showBlock={showBlock}
-                  onDropFun={() =>
-                    onDropFun(
-                      column.name,
-                      filterCards(tasks, column.name).length + 1,
-                    )
-                  }
+                  onDropFun={() => onDropFun(column.name)}
                 />
               </SMainColumn>
             ))}
           </SMainContent>
         </SMainBlock>
       </SContainer>
+      {tasks.length == 0 && !loading ? <h1>Нет задач</h1> : <></>}
     </SMain>
   );
 };

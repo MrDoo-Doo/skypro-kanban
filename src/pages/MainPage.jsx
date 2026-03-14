@@ -7,15 +7,10 @@ import { Outlet } from "react-router-dom";
 import { TasksProvider } from "../context/TaskProvider";
 
 function MainPage() {
-  const [token, setToken] = useState("");
   const [loading, setLoading] = useState(true);
   const [tasks, setTasks] = useState([]);
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    let tokenA = localStorage.getItem("tokenAuth");
-    setToken(tokenA);
-  }, []);
+  const [token, setToken] = useState("");
 
   const getTasks = useCallback(async () => {
     try {
@@ -31,10 +26,14 @@ function MainPage() {
   }, [token]);
 
   useEffect(() => {
+    setToken(localStorage.getItem("tokenAuth"));
+  }, []);
+
+  useEffect(() => {
     if (token) {
-      getTasks();
+      getTasks(token);
     }
-  }, [getTasks, token, tasks]);
+  }, [getTasks, token]);
 
   return (
     <TasksProvider>

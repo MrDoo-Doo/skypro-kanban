@@ -260,44 +260,28 @@ const PopBrowse = ({ task, minusTask }) => {
             </SThemeDown>
             <SPopBrowseBtnBrowse className={isEditing === true ? "_hide" : ""}>
               <SBtnGroup>
-                <SBtnGroupBor
-                  className="_hover03"
-                  onClick={() => setIsEditing(true)}
-                >
+                <SBtnGroupBor onClick={() => setIsEditing(true)}>
                   Редактировать задачу
                 </SBtnGroupBor>
-                <SBtnGroupBor className="_hover03" onClick={minusTask}>
-                  Удалить задачу
-                </SBtnGroupBor>
+                <SBtnGroupBor onClick={minusTask}>Удалить задачу</SBtnGroupBor>
               </SBtnGroup>
-              <SBtnBg className="_hover01">
+              <SBtnBg>
                 <SBtnBgA to={`/`}>Закрыть</SBtnBgA>
               </SBtnBg>
             </SPopBrowseBtnBrowse>
             <SPopBrowseBtnEdit className={isEditing === false ? "_hide" : ""}>
               <SBtnGroup>
-                <SBtnGroupBg
-                  className="_hover01"
-                  type="submit"
-                  onClick={handleSubmit}
-                >
+                <SBtnGroupBg type="submit" onClick={handleSubmit}>
                   Сохранить
                 </SBtnGroupBg>
-                <SBtnGroupBor
-                  className="_hover03"
-                  onClick={() => setIsEditing(false)}
-                >
+                <SBtnGroupBor onClick={() => setIsEditing(false)}>
                   Отменить
                 </SBtnGroupBor>
-                <SBtnGroupBor
-                  className="_hover03"
-                  id="btnDelete"
-                  onClick={minusTask}
-                >
+                <SBtnGroupBor id="btnDelete" onClick={minusTask}>
                   Удалить задачу
                 </SBtnGroupBor>
               </SBtnGroup>
-              <SBtnBg className="_hover01">
+              <SBtnBg>
                 <SBtnBgA to={`/`}>Закрыть</SBtnBgA>
               </SBtnBg>
             </SPopBrowseBtnEdit>

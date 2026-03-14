@@ -308,7 +308,7 @@ const Calendar = ({ able, dataDate }) => {
             {arrCalendar.map((day, index) => (
               <SCalendarCell
                 key={index}
-                inData={day}
+                $inData={day}
                 onClick={() => handleSelect(day, index)}
                 value={index === selectedIndex && day !== ""}
               >
@@ -323,11 +323,9 @@ const Calendar = ({ able, dataDate }) => {
           value={formatDate(currentDate)}
         />
         <SCalendarPeriod>
-          <SCalendarP className="date-end">
+          <SCalendarP>
             Срок исполнения:{" "}
-            <SCalendarPSpan className="date-control">
-              {formatDate(currentDate)}
-            </SCalendarPSpan>
+            <SCalendarPSpan>{formatDate(currentDate)}</SCalendarPSpan>
           </SCalendarP>
         </SCalendarPeriod>
       </SCalendarBlock>

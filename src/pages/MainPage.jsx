@@ -34,7 +34,7 @@ function MainPage() {
     if (token) {
       getTasks();
     }
-  }, [getTasks, token]);
+  }, [getTasks, token, tasks]);
 
   return (
     <TasksProvider>

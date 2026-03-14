@@ -1,9 +1,23 @@
+import {
+  SNotFoundBox,
+  SNotFound,
+  SNotFoundText,
+  SNotFoundBtn,
+} from "./NotPage.styled";
+import { useNavigate } from "react-router-dom";
+
 const NotPage = () => {
+  const navigate = useNavigate();
+  function toMain(e) {
+    e.preventDefault();
+    navigate("/");
+  }
   return (
-    <div className="notfound-box">
-      <h1 className="notfound">404</h1>
-      <p className="notfound-text">Страница не найдена</p>
-    </div>
+    <SNotFoundBox>
+      <SNotFound>404</SNotFound>
+      <SNotFoundText>Страница не найдена</SNotFoundText>
+      <SNotFoundBtn onClick={toMain}>Вернуться на главную</SNotFoundBtn>
+    </SNotFoundBox>
   );
 };
 

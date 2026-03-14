@@ -1,7 +1,13 @@
 import Column from "../Column/Column.jsx";
 import SpaceForDrop from "../SpaceForDrop/SpaceForDrop.jsx";
 import { columnList } from "../../data.js";
-import { SMain, SMainBlock, SMainContent, SMainColumn } from "./Main.styled.js";
+import {
+  SMain,
+  SMainBlock,
+  SMainContent,
+  SMainColumn,
+  SNotTask,
+} from "./Main.styled.js";
 import { SContainer } from "../Header/Header.styled.js";
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
@@ -70,7 +76,11 @@ const Main = ({ loading, error, tasks, getTasks }) => {
           </SMainContent>
         </SMainBlock>
       </SContainer>
-      {tasks.length == 0 && !loading ? <h1>Нет задач</h1> : <></>}
+      {tasks.length == 0 && !loading ? (
+        <SNotTask>Здесь ещё ничего нет</SNotTask>
+      ) : (
+        <></>
+      )}
     </SMain>
   );
 };

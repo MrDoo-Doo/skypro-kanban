@@ -102,7 +102,7 @@ const PopNewCard = () => {
   };
 
   return (
-    <SModalTask id="popNewCard">
+    <SModalTask>
       <SModalTaskContainer>
         <SModalTaskBlock onSubmit={handleSubmit} id="form">
           <SModalTaskContent>
@@ -175,9 +175,7 @@ const PopNewCard = () => {
                 </SModalCategoriesTheme>
               </SModalCategoriesThemes>
             </SModalCategories>
-            <SModalFormCreatBtn className="_hover01" id="btnCreate">
-              Создать задачу
-            </SModalFormCreatBtn>
+            <SModalFormCreatBtn>Создать задачу</SModalFormCreatBtn>
             <p>{error}</p>
           </SModalTaskContent>
         </SModalTaskBlock>

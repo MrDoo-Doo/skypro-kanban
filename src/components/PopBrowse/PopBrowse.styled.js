@@ -242,6 +242,10 @@ export const SBtnBg = styled(SPopBrowseBtnEditB)`
   border: none;
   outline: none;
   color: #ffffff;
+
+  &:hover {
+    background-color: #33399b;
+  }
 `;
 
 export const SBtnGroupBg = styled(SBtnBg)`
@@ -259,6 +263,11 @@ export const SBtnBor = styled(SPopBrowseBtnEditB)`
   background: transparent;
   color: ${({ theme }) => theme.button.formTask};
   margin-right: 8px;
+
+  &:hover {
+    background-color: #33399b;
+    color: #ffffff;
+  }
 `;
 
 export const SBtnGroupBor = styled(SBtnBor)`

@@ -36,7 +36,6 @@ const Card = ({
     <SCards key={cardId}>
       <SCardsItem>
         <SCardsCard
-          className="card"
           draggable={true}
           onDragStart={onDragStartFun}
           onDragEnd={onDragEndFun}
@@ -54,9 +53,7 @@ const Card = ({
             </Link>
           </SCardGroup>
           <SCardContent>
-            <a href="" target="_blank">
-              <SCardTitle>{cardTitle}</SCardTitle>
-            </a>
+            <SCardTitle>{cardTitle}</SCardTitle>
             <SCardDate>
               <SCardDateSVG
                 xmlns="http://www.w3.org/2000/svg"

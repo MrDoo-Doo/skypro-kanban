@@ -83,11 +83,11 @@ export const SCalendarCell = styled.div`
   color: ${({ value, theme }) => (value ? theme.color.calendar : "#94a6be")};
   background: ${({ value, theme }) =>
     !value ? theme.background.calendar : "#94a6be"};
-  cursor: ${({ inData }) => (inData ? "pointer" : "")};
+  cursor: ${({ $inData }) => ($inData ? "pointer" : "")};
 
   &:hover {
-    background: ${({ inData, theme }) =>
-      inData ? theme.background.cellHover : ""};
+    background: ${({ $inData, theme }) =>
+      $inData ? theme.background.cellHover : ""};
   }
 `;
 

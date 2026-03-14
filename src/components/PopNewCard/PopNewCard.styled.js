@@ -97,6 +97,7 @@ export const SModalFormInput = styled.input`
   font-size: 14px;
   line-height: 1;
   letter-spacing: -0.14px;
+  color: ${({ theme }) => theme.color.formTask};
 
   &::-moz-placeholder {
     font-weight: 400;
@@ -159,6 +160,10 @@ export const SModalFormCreatBtn = styled.button`
   line-height: 1;
   color: #ffffff;
   float: right;
+
+  &:hover {
+    background-color: #33399b;
+  }
 `;
 
 export const SModalCategories = styled.div`

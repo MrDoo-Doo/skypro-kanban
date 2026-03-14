@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const SMain = styled.main`
   width: 100%;
   background-color: ${({ theme }) => theme.background.main};
-  height: calc(100vh - 70px);
+  min-height: calc(100vh - 70px);
 `;
 
 export const SMainBlock = styled.div`
@@ -22,4 +22,11 @@ export const SMainColumn = styled.div`
   width: 20%;
   margin: 0 auto;
   display: block;
+`;
+
+export const SNotTask = styled.div`
+  color: ${({ theme }) => theme.color.main};
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
 `;

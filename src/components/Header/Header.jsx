@@ -26,25 +26,14 @@ const Header = () => {
     <SHeader>
       <SContainer>
         <SHeaderBlock>
-          <SHeaderLogo className="_show _light">
-            <a href="" target="_self">
-              <SHeaderLogoIMG
-                src={isDark ? "images/logo_dark.png" : "images/logo.png"}
-                alt="logo"
-              />
-            </a>
-          </SHeaderLogo>
-          <SHeaderLogo className="_dark">
-            <a href="" target="_self">
-              <SHeaderLogoIMG src="images/logo_dark.png" alt="logo" />
-            </a>
+          <SHeaderLogo>
+            <SHeaderLogoIMG
+              src={isDark ? "images/logo_dark.png" : "images/logo.png"}
+              alt="logo"
+            />
           </SHeaderLogo>
           <SHeaderNav>
-            <SHeaderBtnMainNew
-              onClick={createTask}
-              className="_hover01"
-              id="btnMainNew"
-            >
+            <SHeaderBtnMainNew onClick={createTask} id="btnMainNew">
               <SHeaderBtnMainNewA to="/">
                 Создать новую задачу
               </SHeaderBtnMainNewA>

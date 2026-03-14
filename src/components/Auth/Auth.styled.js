@@ -9,7 +9,7 @@ export const STextarea = styled.div`
 export const SAuthBack = styled.div`
   width: 100%;
   height: 100%;
-  background-color: ${({ theme }) => theme.background.auth};
+  background-color: ${({ theme }) => theme.background.main};
   display: flex;
   justify-content: center;
   align-items: center;

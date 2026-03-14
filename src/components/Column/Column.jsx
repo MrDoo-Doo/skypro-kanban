@@ -1,6 +1,6 @@
 import Card from "../Card/Card.jsx";
 import CardLoading from "../Card/CardLoading.jsx";
-import { SColumnTitle, SColumnTitleP } from "./Column.styled.js";
+import { SColumnTitle, SColumnTitleP, SColumnBox } from "./Column.styled.js";
 
 const formatDate = (date) => {
   const standartDate = new Date(date);
@@ -32,7 +32,7 @@ const Column = ({
       <SColumnTitle>
         <SColumnTitleP>{columnName}</SColumnTitleP>
       </SColumnTitle>
-      <div>
+      <SColumnBox>
         {loading
           ? Array.from({ length: skeletonCount }).map((_, i) => (
               <CardLoading key={i} cardId={i} />
@@ -49,7 +49,7 @@ const Column = ({
                 setCurrentCard={setCurrentCard}
               />
             ))}
-      </div>
+      </SColumnBox>
     </>
   );
 };

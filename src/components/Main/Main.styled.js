@@ -10,18 +10,30 @@ export const SMainBlock = styled.div`
   width: 100%;
   margin: 0 auto;
   padding: 25px 0 49px;
+
+  @media screen and (max-width: 1200px) {
+    padding: 40px 0 64px;
+  }
 `;
 
 export const SMainContent = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+
+  @media screen and (max-width: 1200px) {
+    display: block;
+  }
 `;
 
 export const SMainColumn = styled.div`
   width: 20%;
   margin: 0 auto;
   display: block;
+
+  @media screen and (max-width: 1200px) {
+    width: 100%;
+  }
 `;
 
 export const SNotTask = styled.div`

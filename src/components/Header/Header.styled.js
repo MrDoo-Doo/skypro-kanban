@@ -48,6 +48,18 @@ export const SHeaderBtnMainNew = styled.button`
   &:hover {
     background-color: #33399b;
   }
+
+  @media screen and (max-width: 495px) {
+    z-index: 3;
+    position: fixed;
+    left: 16px;
+    bottom: 30px;
+    top: auto;
+    width: calc(100vw - 32px);
+    height: 40px;
+    border-radius: 4px;
+    margin-right: 0;
+  }
 `;
 
 export const SHeaderBtnMainNewA = styled(Link)`

@@ -103,6 +103,7 @@ const PopNewCard = () => {
 
   return (
     <SModalTask>
+      <div className="background_shadow"></div>
       <SModalTaskContainer>
         <SModalTaskBlock onSubmit={handleSubmit} id="form">
           <SModalTaskContent>

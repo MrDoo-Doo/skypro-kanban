@@ -5,10 +5,12 @@ export const SPopExit = styled.div`
   height: 100%;
   min-width: 320px;
   min-height: 100vh;
-  position: absolute;
+  /* position: absolute; */
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 5;
+  background: rgba(0, 0, 0, 0.4);
 `;
 
 export const SPopExitContainer = styled.div`
@@ -20,7 +22,6 @@ export const SPopExitContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.4);
 `;
 
 export const SPopExitBlock = styled.div`
@@ -33,6 +34,10 @@ export const SPopExitBlock = styled.div`
   border-radius: 10px;
   border: 0.7px solid ${({ theme }) => theme.border.exit};
   box-shadow: 0px 4px 67px -12px rgba(0, 0, 0, 0.13);
+
+  @media only screen and (max-width: 375px) {
+    padding: 50px 20px;
+  }
 `;
 
 export const SPopExitTitle = styled.div`
@@ -50,6 +55,10 @@ export const SPopExitFormGroup = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media only screen and (max-width: 375px) {
+    display: block;
+  }
 `;
 
 export const SPopExitY = styled.button`
@@ -72,6 +81,13 @@ export const SPopExitY = styled.button`
   &:hover {
     background-color: #33399b;
   }
+
+  @media only screen and (max-width: 375px) {
+    width: 100%;
+    height: 40px;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
 `;
 
 export const SPopExitN = styled.button`
@@ -93,5 +109,10 @@ export const SPopExitN = styled.button`
   &:hover {
     background-color: #33399b;
     color: #ffffff;
+  }
+
+  @media only screen and (max-width: 375px) {
+    width: 100%;
+    height: 40px;
   }
 `;

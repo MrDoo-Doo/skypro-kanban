@@ -125,6 +125,7 @@ const PopBrowse = ({ task, minusTask }) => {
 
   return (
     <SPopBrowse id={task}>
+      <div className="background_shadow"></div>
       <SPopBrowseContainer>
         <SPopBrowseBlock onSubmit={handleSubmit} id="form">
           <SPopBrowseContent>
@@ -250,14 +251,6 @@ const PopBrowse = ({ task, minusTask }) => {
               </SPopBrowseForm>
               <Calendar able={isEditing} dataDate={selectedDate} />
             </SPopBrowseWrap>
-            <SThemeDown className={"_hide"}>
-              <SStatusP>Категория</SStatusP>
-              <SCategoriesTheme value={task.topic}>
-                <SCategoriesThemeP value={task.topic}>
-                  {task.topic}
-                </SCategoriesThemeP>
-              </SCategoriesTheme>
-            </SThemeDown>
             <SPopBrowseBtnBrowse className={isEditing === true ? "_hide" : ""}>
               <SBtnGroup>
                 <SBtnGroupBor onClick={() => setIsEditing(true)}>

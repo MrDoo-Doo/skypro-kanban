@@ -10,9 +10,13 @@ import {
   SContainer,
 } from "./Header.styled.js";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const Header = () => {
   const navigate = useNavigate();
+  const { theme } = useContext(ThemeContext);
+  const isDark = theme === "dark";
 
   function createTask(e) {
     e.preventDefault();
@@ -22,22 +26,14 @@ const Header = () => {
     <SHeader>
       <SContainer>
         <SHeaderBlock>
-          <SHeaderLogo className="_show _light">
-            <a href="" target="_self">
-              <SHeaderLogoIMG src="images/logo.png" alt="logo" />
-            </a>
-          </SHeaderLogo>
-          <SHeaderLogo className="_dark">
-            <a href="" target="_self">
-              <SHeaderLogoIMG src="images/logo_dark.png" alt="logo" />
-            </a>
+          <SHeaderLogo>
+            <SHeaderLogoIMG
+              src={isDark ? "images/logo_dark.png" : "images/logo.png"}
+              alt="logo"
+            />
           </SHeaderLogo>
           <SHeaderNav>
-            <SHeaderBtnMainNew
-              onClick={createTask}
-              className="_hover01"
-              id="btnMainNew"
-            >
+            <SHeaderBtnMainNew onClick={createTask} id="btnMainNew">
               <SHeaderBtnMainNewA to="/">
                 Создать новую задачу
               </SHeaderBtnMainNewA>

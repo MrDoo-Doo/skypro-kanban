@@ -9,7 +9,7 @@ export const STextarea = styled.div`
 export const SAuthBack = styled.div`
   width: 100%;
   height: 100%;
-  background-color: #eaeef6;
+  background-color: ${({ theme }) => theme.background.main};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,15 +17,14 @@ export const SAuthBack = styled.div`
 
 export const SAuthForm = styled.form`
   width: 368px;
-  /* height: 329px; */
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 0.7px solid #d4dbe5;
+  border: 0.7px solid ${({ theme }) => theme.border.auth};
   border-radius: 10px;
   padding: 50px 60px;
   gap: 20px;
-  background: #ffffff;
+  background: ${({ theme }) => theme.background.auth};
   box-shadow: 0px 4px 67px -12px #00000021;
 `;
 
@@ -35,7 +34,7 @@ export const SAuthTitle = styled.h2`
   line-height: 150%;
   letter-spacing: -3%;
   text-align: center;
-  color: #000;
+  color: ${({ theme }) => theme.color.auth};
 `;
 
 export const SAuthInputBox = styled.div`
@@ -47,9 +46,14 @@ export const SAuthInputBox = styled.div`
 export const SAuthInput = styled.input`
   width: 248px;
   height: 30px;
-  border: 0.7px solid #94a6be66;
   border-radius: 8px;
   padding: 8px 10px;
+  background: transparent;
+  color: ${({ theme }) => theme.color.auth};
+  ${({ $error }) =>
+    !$error
+      ? "border: 0.7px solid #94a6be66;"
+      : "border: 0.7px solid #df1c3666;"};
 `;
 
 export const SAuthBuuton = styled.button`
@@ -93,4 +97,9 @@ export const SAuthTextA = styled(Link)`
   text-align: center;
   color: #94a6be66;
   text-decoration: underline;
+`;
+
+export const SError = styled.p`
+  color: red;
+  font-size: 14px;
 `;

@@ -28,28 +28,8 @@ export const postTask = async (token, task) => {
   }
 };
 
-// export async function postTask({ token, task }) {
-//   console.log(task);
-
-//   try {
-//     const data = await axios.post(API_URL, task, {
-//       headers: {
-//         // Authorization: "Bearer " + token,
-//         Authorization: `Bearer ${token}`,
-//         "Content-Type": "",
-//       },
-//     });
-//     console.log(data);
-//     return data.data.tasks;
-//   } catch (error) {
-//     console.log("774");
-//     throw new Error(error.message);
-//   }
-// }
-
 export async function editTask(token, id, task) {
   try {
-    // const data = await axios.patch(`${API_URL}/${id}`, task, { axios.put
     const data = await axios.put(`${API_URL}/${id}`, task, {
       headers: {
         Authorization: `Bearer ${token}`,

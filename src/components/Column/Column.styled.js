@@ -5,6 +5,11 @@ export const SColumnTitle = styled.div`
   margin: 15px 0;
 `;
 
+export const SColumnBox = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
 export const SColumnTitleP = styled.p`
   color: #94a6be;
   font-size: 14px;

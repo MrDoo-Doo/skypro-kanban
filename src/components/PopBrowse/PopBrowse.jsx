@@ -21,20 +21,15 @@ import {
   SPopFormBrowseArea,
   SPopBrowseBtnBrowse,
   SPopBrowseBtnEdit,
-  SPopBrowseBtnBrowseB,
-  SPopBrowseBtnEditB,
   SBtnBg,
   SBtnGroupBg,
   SBtnGroupBor,
   SBtnBgA,
-  SBtnBor,
-  SBtnBorA,
   SBtnGroup,
 } from "./PopBrowse.styled.js";
 import { useEffect, useContext, useState } from "react";
 import Calendar from "../Calendar/Calendar";
-import { useNavigate, useOutletContext } from "react-router-dom";
-// import { cardList } from "../../data.js";
+import { useNavigate } from "react-router-dom";
 import { TaskContext } from "../../context/TaskContext";
 
 const statuses = [
@@ -45,16 +40,21 @@ const statuses = [
   "Готово",
 ];
 
+const localeDate = () => {
+  const nowDate = new Date();
+  const difTime = nowDate.getTimezoneOffset() * 60000;
+  const actualDate = new Date(Date.now() - difTime).toISOString();
+  return actualDate;
+};
+
 const PopBrowse = ({ task, minusTask }) => {
-  // const task = useMemo(() => cardList.find((t) => t.id === id), [id]);
   const navigate = useNavigate();
-  const { getTasks } = useOutletContext();
-  const { updateTask, deleteTask } = useContext(TaskContext);
+  const { updateTask, getTasks } = useContext(TaskContext);
 
   const [isEditing, setIsEditing] = useState(false);
   const [description, setDescription] = useState(task.description);
   const [status, setStatus] = useState(task.status);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(task.date);
   const [activeStatus, setActiveStatus] = useState("");
 
   const [formData, setFormData] = useState({
@@ -73,9 +73,6 @@ const PopBrowse = ({ task, minusTask }) => {
         setIsEditing(false);
       }, 0);
     }
-    console.log(formData);
-    console.log(task.status);
-    console.log(task.description);
   }, [task]);
 
   const [error, setError] = useState("");
@@ -89,19 +86,22 @@ const PopBrowse = ({ task, minusTask }) => {
   };
 
   const handleSubmit = async () => {
-    // e.preventDefault();
     if (!formData.description) {
       setFormData((prevState) => ({
         ...prevState,
         description: "Описание",
       }));
     }
+    let dataCreate = localeDate();
+    if (localStorage.getItem("pickedDate")) {
+      dataCreate = localStorage.getItem("pickedDate");
+    }
     try {
       const data = {
         ...task,
         status: formData.status,
         description: formData.description,
-        // date: formData.date,
+        date: dataCreate,
       };
       await updateTask(data, task._id);
       setIsEditing(false);
@@ -113,27 +113,18 @@ const PopBrowse = ({ task, minusTask }) => {
     }
   };
 
-  // const minusTask = async () => {
-  //   try {
-  //     await deleteTask(task._id);
-  //     setError("");
-  //     getTasks();
-  //     navigate("/");
-  //   } catch (err) {
-  //     setError(err.message);
-  //   }
-  // };
-
   const handleStatusClick = (stat) => {
     setActiveStatus(stat);
     setFormData((prevState) => ({ ...prevState, status: stat }));
   };
-  // function close(e) {
-  //   e.preventDefault();
-  //   navigate("/");
-  // }
+
+  if (error) {
+    console.log(error);
+  }
+
   return (
     <SPopBrowse id={task}>
+      <div className="background_shadow"></div>
       <SPopBrowseContainer>
         <SPopBrowseBlock onSubmit={handleSubmit} id="form">
           <SPopBrowseContent>
@@ -257,56 +248,32 @@ const PopBrowse = ({ task, minusTask }) => {
                   ></SPopFormBrowseArea>
                 </SPopFormBrowseBlock>
               </SPopBrowseForm>
-              <Calendar />
+              <Calendar able={isEditing} dataDate={selectedDate} />
             </SPopBrowseWrap>
-            <SThemeDown className={"_hide"}>
-              <SStatusP>Категория</SStatusP>
-              <SCategoriesTheme value={task.topic}>
-                <SCategoriesThemeP value={task.topic}>
-                  {task.topic}
-                </SCategoriesThemeP>
-              </SCategoriesTheme>
-            </SThemeDown>
             <SPopBrowseBtnBrowse className={isEditing === true ? "_hide" : ""}>
               <SBtnGroup>
-                <SBtnGroupBor
-                  className="_hover03"
-                  onClick={() => setIsEditing(true)}
-                >
+                <SBtnGroupBor onClick={() => setIsEditing(true)}>
                   Редактировать задачу
                 </SBtnGroupBor>
-                <SBtnGroupBor className="_hover03" onClick={minusTask}>
-                  Удалить задачу
-                </SBtnGroupBor>
+                <SBtnGroupBor onClick={minusTask}>Удалить задачу</SBtnGroupBor>
               </SBtnGroup>
-              <SBtnBg className="_hover01">
+              <SBtnBg>
                 <SBtnBgA to={`/`}>Закрыть</SBtnBgA>
               </SBtnBg>
             </SPopBrowseBtnBrowse>
             <SPopBrowseBtnEdit className={isEditing === false ? "_hide" : ""}>
               <SBtnGroup>
-                <SBtnGroupBg
-                  className="_hover01"
-                  type="submit"
-                  onClick={handleSubmit}
-                >
+                <SBtnGroupBg type="submit" onClick={handleSubmit}>
                   Сохранить
                 </SBtnGroupBg>
-                <SBtnGroupBor
-                  className="_hover03"
-                  onClick={() => setIsEditing(false)}
-                >
+                <SBtnGroupBor onClick={() => setIsEditing(false)}>
                   Отменить
                 </SBtnGroupBor>
-                <SBtnGroupBor
-                  className="_hover03"
-                  id="btnDelete"
-                  onClick={minusTask}
-                >
+                <SBtnGroupBor id="btnDelete" onClick={minusTask}>
                   Удалить задачу
                 </SBtnGroupBor>
               </SBtnGroup>
-              <SBtnBg className="_hover01">
+              <SBtnBg>
                 <SBtnBgA to={`/`}>Закрыть</SBtnBgA>
               </SBtnBg>
             </SPopBrowseBtnEdit>

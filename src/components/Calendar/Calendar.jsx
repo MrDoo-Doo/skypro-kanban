@@ -20,7 +20,23 @@ import {
 import { useEffect, useState } from "react";
 import React from "react";
 
-const Calendar = () => {
+const dateFormatUTC = (simplyDate) => {
+  const parts = simplyDate.split(".").map(Number);
+  const [day, month, year] = parts;
+  const isoDate = new Date(Date.UTC(year, month - 1, day));
+  return isoDate.toISOString();
+};
+
+const formatDate = (date) => {
+  const standartDate = new Date(date);
+  const day = String(standartDate.getUTCDate()).padStart(2, "0");
+  const month = String(standartDate.getUTCMonth() + 1).padStart(2, "0");
+  const year = standartDate.getUTCFullYear();
+  const formattedDate = `${day}.${month}.${year}`;
+  return formattedDate;
+};
+
+const Calendar = ({ able, dataDate }) => {
   const months = [
     "Январь",
     "Февраль",
@@ -48,6 +64,7 @@ const Calendar = () => {
   const [isCalendarInitialized, setIsCalendarInitialized] = useState(false);
   const [selectedIndex, setSelectedIndex] = React.useState(null);
   const [selectedDate, setSelectedDate] = useState("");
+  const [currentDate, setCurrentDate] = useState(dataDate);
 
   const currentCalendar = (status) => {
     if (status === "prev") {
@@ -229,26 +246,23 @@ const Calendar = () => {
     if (value === "") return;
     setSelectedIndex(index);
     setSelectedDate(value);
+    setCurrentDate(
+      dateFormatUTC(`${value}.${currentMonth + 1}.${currentYear}`),
+    );
   };
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     let fullDate = new Date(
-  //       currentYear,
-  //       currentMonth,
-  //       selectedDate,
-  //       12,
-  //       0,
-  //       0,
-  //     ).toISOString();
-  //     setfullDate(localStorage.setItem("DataTime", fullDate));
-  //   }, 0);
-  // }, [selectedDate]);
+  useEffect(() => {
+    if (selectedDate) {
+      localStorage.setItem(
+        "pickedDate",
+        dateFormatUTC(`${selectedDate}.${currentMonth + 1}.${currentYear}`),
+      );
+    }
+  }, [selectedDate]);
 
   return (
     <SCalendar>
       <SCalendarTitle>Даты</SCalendarTitle>
-      <SCalendarBlock>
+      <SCalendarBlock style={{ pointerEvents: able ? "painted" : "none" }}>
         <SCalendarNav>
           <SCalendarMonth>{`${months[currentMonth]} ${currentYear}`}</SCalendarMonth>
           <SNavActions>
@@ -294,6 +308,7 @@ const Calendar = () => {
             {arrCalendar.map((day, index) => (
               <SCalendarCell
                 key={index}
+                $inData={day}
                 onClick={() => handleSelect(day, index)}
                 value={index === selectedIndex && day !== ""}
               >
@@ -305,12 +320,12 @@ const Calendar = () => {
         <input
           type="hidden"
           id="datepick_value"
-          value={`${selectedDate}.${currentMonth + 1}.${currentYear}`}
+          value={formatDate(currentDate)}
         />
         <SCalendarPeriod>
-          <SCalendarP className="date-end">
+          <SCalendarP>
             Срок исполнения:{" "}
-            <SCalendarPSpan className="date-control">{`${selectedDate}.${currentMonth + 1}.${currentYear}`}</SCalendarPSpan>
+            <SCalendarPSpan>{formatDate(currentDate)}</SCalendarPSpan>
           </SCalendarP>
         </SCalendarPeriod>
       </SCalendarBlock>

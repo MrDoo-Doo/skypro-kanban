@@ -15,11 +15,31 @@ import {
 } from "./Card.styled";
 import { Link } from "react-router-dom";
 
-const Card = ({ cardDate, cardTitle, cardId, cardTopic }) => {
+const Card = ({
+  cardDate,
+  cardTitle,
+  cardId,
+  cardTopic,
+  setCurrentCard,
+  setShowBlock,
+}) => {
+  const onDragStartFun = () => {
+    setShowBlock(true);
+    setCurrentCard(cardId);
+  };
+  const onDragEndFun = () => {
+    setShowBlock(false);
+    setCurrentCard(null);
+  };
+
   return (
     <SCards key={cardId}>
       <SCardsItem>
-        <SCardsCard className="card">
+        <SCardsCard
+          draggable={true}
+          onDragStart={onDragStartFun}
+          onDragEnd={onDragEndFun}
+        >
           <SCardGroup>
             <SCardTheme $cardTopic={cardTopic}>
               <SCardThemeP>{cardTopic}</SCardThemeP>
@@ -31,25 +51,9 @@ const Card = ({ cardDate, cardTitle, cardId, cardTopic }) => {
                 <SCardBtnDIV></SCardBtnDIV>
               </SCardBtn>
             </Link>
-            {/* <a href={`/card/${cardId}`} target="_self">
-              <SCardBtn>
-                <SCardBtnDIV></SCardBtnDIV>
-                <SCardBtnDIV></SCardBtnDIV>
-                <SCardBtnDIV></SCardBtnDIV>
-              </SCardBtn>
-            </a> */}
-            {/* <a href="#browser" target="_self">
-              <SCardBtn>
-                <SCardBtnDIV></SCardBtnDIV>
-                <SCardBtnDIV></SCardBtnDIV>
-                <SCardBtnDIV></SCardBtnDIV>
-              </SCardBtn>
-            </a> */}
           </SCardGroup>
           <SCardContent>
-            <a href="" target="_blank">
-              <SCardTitle>{cardTitle}</SCardTitle>
-            </a>
+            <SCardTitle>{cardTitle}</SCardTitle>
             <SCardDate>
               <SCardDateSVG
                 xmlns="http://www.w3.org/2000/svg"

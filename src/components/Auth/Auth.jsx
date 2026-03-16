@@ -8,6 +8,7 @@ import {
   SAuthText,
   SAuthTextA,
   SAuthTextBoxS,
+  SError,
 } from "./Auth.styled.js";
 import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
@@ -89,6 +90,7 @@ const Auth = ({ isAuth }) => {
       setError(err.message);
     }
   };
+
   return (
     <SAuthBack>
       <SAuthForm onSubmit={handleSubmit} id="form">
@@ -125,7 +127,7 @@ const Auth = ({ isAuth }) => {
             value={formData.password}
             onChange={handleChange}
           />
-          <p>{error}</p>
+          <SError>{error}</SError>
         </SAuthInputBox>
         <SAuthBuuton>{isAuth ? "Зарегистрироваться" : "Войти"}</SAuthBuuton>
         {!isAuth && (

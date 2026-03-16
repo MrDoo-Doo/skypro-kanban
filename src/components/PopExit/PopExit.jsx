@@ -1,7 +1,15 @@
-import Calendar from "../Calendar/Calendar";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
+import {
+  SPopExit,
+  SPopExitContainer,
+  SPopExitBlock,
+  SPopExitTitle,
+  SPopExitFormGroup,
+  SPopExitY,
+  SPopExitN,
+} from "./PopExit.styled";
 
 const PopExit = () => {
   const navigate = useNavigate();
@@ -9,43 +17,30 @@ const PopExit = () => {
 
   function handleLogout(e) {
     e.preventDefault();
-    localStorage.clear();
+    localStorage.removeItem("tokenAuth");
+    localStorage.removeItem("userInfo");
+    localStorage.removeItem("pickedDate");
+    localStorage.removeItem("DataTime");
     logout();
-    // setIsAuth(false);
     navigate("/login");
   }
   function handleLogoutCancel(e) {
     e.preventDefault();
     navigate("/");
   }
+
   return (
-    <div className="pop-exit" id="popExit">
-      <div className="pop-exit__container">
-        <div className="pop-exit__block">
-          <div className="pop-exit__ttl">
-            <h2>Выйти из аккаунта?</h2>
-          </div>
-          <form className="pop-exit__form" id="formExit" action="#">
-            <div className="pop-exit__form-group">
-              <button
-                onClick={handleLogout}
-                className="pop-exit__exit-yes _hover01"
-                id="exitYes"
-              >
-                <a href="modal/signin.html">Да, выйти</a>{" "}
-              </button>
-              <button
-                onClick={handleLogoutCancel}
-                className="pop-exit__exit-no _hover03"
-                id="exitNo"
-              >
-                {/* <a href="/">Нет, остаться</a>{" "} */}Нет, остаться
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+    <SPopExit>
+      <SPopExitContainer>
+        <SPopExitBlock>
+          <SPopExitTitle>Выйти из аккаунта?</SPopExitTitle>
+          <SPopExitFormGroup>
+            <SPopExitY onClick={handleLogout}>Да, выйти</SPopExitY>
+            <SPopExitN onClick={handleLogoutCancel}>Нет, остаться</SPopExitN>
+          </SPopExitFormGroup>
+        </SPopExitBlock>
+      </SPopExitContainer>
+    </SPopExit>
   );
 };
 

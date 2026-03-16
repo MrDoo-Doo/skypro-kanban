@@ -10,6 +10,12 @@ export const SModalTask = styled.div`
   top: 0;
   left: 0;
   z-index: 6;
+  top: 70px;
+
+  @media screen and (min-width: 660px) {
+    top: 0px;
+    height: 100%;
+  }
 `;
 
 export const SModalTaskContainer = styled.div`
@@ -21,19 +27,30 @@ export const SModalTaskContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.4);
+
+  @media screen and (max-width: 660px) {
+    padding: 0;
+    justify-content: flex-start;
+  }
 `;
 
 export const SModalTaskBlock = styled.form`
   display: block;
   margin: 0 auto;
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.background.formTask};
   max-width: 630px;
-  width: 100%;
   padding: 40px 30px 48px;
-  border-radius: 10px;
-  border: 0.7px solid #d4dbe5;
+  border-radius: 0;
+  border: 0.7px solid ${({ theme }) => theme.border.formTask};
   position: relative;
+
+  @media screen and (min-width: 660px) {
+    border-radius: 10px;
+    width: 100%;
+  }
+  @media screen and (max-width: 495px) {
+    padding: 20px 16px 32px;
+  }
 `;
 
 export const SModalTaskContent = styled.div`
@@ -42,11 +59,15 @@ export const SModalTaskContent = styled.div`
 `;
 
 export const SModalTaskTitle = styled.h3`
-  color: #000;
+  color: ${({ theme }) => theme.color.formTask};
   font-size: 20px;
   font-weight: 600;
   line-height: 24px;
   margin-bottom: 20px;
+
+  @media screen and (max-width: 660px) {
+    font-size: 24px;
+  }
 `;
 
 export const SModalTaskClose = styled(Link)`
@@ -65,6 +86,10 @@ export const SModalTaskWrap = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+
+  @media screen and (max-width: 660px) {
+    flex-direction: column;
+  }
 `;
 
 export const SModalTaskForm = styled.div`
@@ -72,6 +97,12 @@ export const SModalTaskForm = styled.div`
   width: 100%;
   display: block;
   margin-bottom: 20px;
+
+  @media screen and (max-width: 495px) {
+    max-width: 100%;
+    width: 100%;
+    display: block;
+  }
 `;
 
 export const SModalFormBlock = styled.div`
@@ -80,10 +111,14 @@ export const SModalFormBlock = styled.div`
 `;
 
 export const SModalFormLabel = styled.label`
-  color: #000;
+  color: ${({ theme }) => theme.color.formTask};
   font-size: 14px;
   font-weight: 600;
   line-height: 1;
+
+  @media screen and (max-width: 660px) {
+    font-size: 18px;
+  }
 `;
 
 export const SModalFormInput = styled.input`
@@ -97,6 +132,7 @@ export const SModalFormInput = styled.input`
   font-size: 14px;
   line-height: 1;
   letter-spacing: -0.14px;
+  color: ${({ theme }) => theme.color.formTask};
 
   &::-moz-placeholder {
     font-weight: 400;
@@ -112,6 +148,10 @@ export const SModalFormInput = styled.input`
     line-height: 1px;
     color: #94a6be;
     letter-spacing: -0.14px;
+  }
+
+  @media screen and (max-width: 660px) {
+    font-size: 18px;
   }
 `;
 
@@ -128,6 +168,7 @@ export const SModalFormArea = styled.textarea`
   font-size: 14px;
   line-height: 1;
   letter-spacing: -0.14px;
+  color: ${({ theme }) => theme.color.formTask};
 
   &::-moz-placeholder {
     font-weight: 400;
@@ -144,6 +185,14 @@ export const SModalFormArea = styled.textarea`
     color: #94a6be;
     letter-spacing: -0.14px;
   }
+
+  @media screen and (max-width: 660px) {
+    font-size: 18px;
+  }
+  @media screen and (max-width: 495px) {
+    max-width: 100%;
+    height: 34px;
+  }
 `;
 
 export const SModalFormCreatBtn = styled.button`
@@ -158,6 +207,20 @@ export const SModalFormCreatBtn = styled.button`
   line-height: 1;
   color: #ffffff;
   float: right;
+
+  &:hover {
+    background-color: #33399b;
+  }
+
+  @media screen and (max-width: 660px) {
+    width: 100%;
+    height: 36px;
+    font-size: 18px;
+  }
+  @media screen and (max-width: 495px) {
+    width: 100%;
+    height: 40px;
+  }
 `;
 
 export const SModalCategories = styled.div`
@@ -166,10 +229,15 @@ export const SModalCategories = styled.div`
 
 export const SModalCategoriesP = styled.p`
   margin-bottom: 14px;
-  color: #000;
+  color: ${({ theme }) => theme.color.formTask};
   font-size: 14px;
   font-weight: 600;
   line-height: 1;
+
+  @media screen and (max-width: 660px) {
+    margin-left: 10px;
+    font-size: 18px;
+  }
 `;
 
 export const SModalCategoriesThemes = styled.div`

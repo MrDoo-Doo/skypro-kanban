@@ -1,9 +1,23 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { ThemeContext } from "../../context/ThemeContext";
+import {
+  SHeaderUser,
+  SHeaderPopUserSet,
+  SPopUserName,
+  SUserMail,
+  SPopUserTheme,
+  SPopUserThemeP,
+  SPopUserThemeInput,
+  SPopUserButton,
+} from "./PopUser.styled";
 
 const PopUser = () => {
   const [modalWin, setModalWin] = useState(false);
-
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const { theme, toggleTheme } = useContext(ThemeContext);
+  const isDark = theme === "dark";
   const changeModal = () => {
     if (modalWin === true) {
       setModalWin(false);
@@ -22,32 +36,28 @@ const PopUser = () => {
     navigate("/exit");
   }
 
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem("userInfo"));
+    setTimeout(() => {
+      setUserName(userData.name);
+      setUserEmail(userData.login);
+    }, 0);
+  });
+
   return (
     <>
-      <a
-        onClick={changeModal}
-        // href="#user-set-target"
-        className="header__user _hover02"
-      >
-        Ivan Ivanov
-      </a>
-      <div
-        style={styleWin}
-        className="header__pop-user-set pop-user-set"
-        id="user-set-target"
-      >
-        <p className="pop-user-set__name">Ivan Ivanov</p>
-        <p className="pop-user-set__mail">ivan.ivanov@gmail.com</p>
-        <div className="pop-user-set__theme">
-          <p>Темная тема</p>
-          <input type="checkbox" className="checkbox" name="checkbox" />
-        </div>
-        <button onClick={exit} type="button" className="_hover03">
-          {/* <Link to="/exit">Выйти</Link> */}
-          {/* <a href="#popExit">Выйти</a> */}
+      <SHeaderUser onClick={changeModal}>{userName}</SHeaderUser>
+      <SHeaderPopUserSet style={styleWin} id="user-set-target">
+        <SPopUserName>{userName}</SPopUserName>
+        <SUserMail>{userEmail}</SUserMail>
+        <SPopUserTheme>
+          <SPopUserThemeP>Тёмная тема</SPopUserThemeP>
+          <SPopUserThemeInput checked={isDark} onChange={toggleTheme} />
+        </SPopUserTheme>
+        <SPopUserButton onClick={exit} type="button">
           Выйти
-        </button>
-      </div>
+        </SPopUserButton>
+      </SHeaderPopUserSet>
     </>
   );
 };

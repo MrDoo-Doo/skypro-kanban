@@ -19,56 +19,31 @@ import {
   SModalFormBlock,
 } from "./PopNewCard.styled";
 import Calendar from "../Calendar/Calendar";
-import { useNavigate, useOutletContext } from "react-router-dom";
-import { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
 import { TaskContext } from "../../context/TaskContext";
-// import { fetchTasks } from "../../services/api";
-// console.log(localStorage.getItem("DataTime"));
+
+const localeDate = () => {
+  const nowDate = new Date();
+  const difTime = nowDate.getTimezoneOffset() * 60000;
+  const actualDate = new Date(Date.now() - difTime).toISOString();
+  return actualDate;
+};
 
 const PopNewCard = () => {
   const navigate = useNavigate();
-  const { getTasks } = useOutletContext();
-  const { addNewTask } = useContext(TaskContext);
-  // const [fullDate, setfullDate] = useState(new Date().toISOString());
+  const { addNewTask, getTasks } = useContext(TaskContext);
 
-  // const now = new Date();
-  // hello();
   const [formData, setFormData] = useState({
     title: "",
     topic: "Research",
-    status: "В работе",
+    status: "Без статуса",
     description: "",
-    // date: fullDate,
-    date: new Date().toISOString(),
+    date: "",
   });
 
   const [activeCategory, setActiveCategory] = useState("Research");
-  // const [errors, setErrors] = useState({
-  //   name: "",
-  //   description: "",
-  // });
-
   const [error, setError] = useState("");
-
-  // const validateForm = () => {
-  //   const newErrors = { name: "", description: "" };
-  //   let isValid = true;
-
-  //   if (!formData.name.trim()) {
-  //     newErrors.name = true;
-  //     setError("Заполните все поля");
-  //     isValid = false;
-  //   }
-
-  //   if (!formData.description.trim()) {
-  //     newErrors.description = true;
-  //     setError("Заполните все поля");
-  //     isValid = false;
-  //   }
-
-  //   setErrors(newErrors);
-  //   return isValid;
-  // };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -76,8 +51,6 @@ const PopNewCard = () => {
       ...formData,
       [name]: value,
     });
-    // setErrors({ ...errors, [name]: false });
-    // setError("");
   };
 
   const handleSubmit = async (e) => {
@@ -100,45 +73,36 @@ const PopNewCard = () => {
         description: "Описание",
       }));
     }
-    // setFormData((prevState) => ({
-    //   ...prevState,
-    //   date: fullDate,
-    // }));
-    // console.log(fullDate);
-    // if (!validateForm()) {
-    //   return;
-    // }
+    let dataCreate = localeDate();
+    if (localStorage.getItem("pickedDate")) {
+      dataCreate = localStorage.getItem("pickedDate");
+    }
     try {
       const data = {
         title: formData.title,
         topic: formData.topic,
         status: formData.status,
         description: formData.description,
-        date: formData.date,
+        date: dataCreate,
       };
       await addNewTask(data);
-      // if (data) {
       getTasks();
       navigate("/");
-      // }
     } catch (err) {
       setError(err.message);
+    } finally {
+      localStorage.removeItem("pickedDate");
     }
   };
-  // const navigate = useNavigate();
-  // function close(e) {
-  //   e.preventDefault();
-  //   navigate("/");
-  // }
+
   const handleCategoryClick = (category) => {
     setActiveCategory(category);
     setFormData((prevState) => ({ ...prevState, topic: category }));
   };
-  // const ccc = () => {
-  //   console.log(fullDate);
-  // };
+
   return (
-    <SModalTask id="popNewCard">
+    <SModalTask>
+      <div className="background_shadow"></div>
       <SModalTaskContainer>
         <SModalTaskBlock onSubmit={handleSubmit} id="form">
           <SModalTaskContent>
@@ -174,7 +138,7 @@ const PopNewCard = () => {
                   ></SModalFormArea>
                 </SModalFormBlock>
               </SModalTaskForm>
-              <Calendar />
+              <Calendar able={true} dataDate={localeDate()} />
             </SModalTaskWrap>
             <SModalCategories>
               <SModalCategoriesP>Категория</SModalCategoriesP>
@@ -211,10 +175,7 @@ const PopNewCard = () => {
                 </SModalCategoriesTheme>
               </SModalCategoriesThemes>
             </SModalCategories>
-            <SModalFormCreatBtn className="_hover01" id="btnCreate">
-              Создать задачу
-            </SModalFormCreatBtn>
-            {/* <h1 onClick={() => ccc()}>check</h1> */}
+            <SModalFormCreatBtn>Создать задачу</SModalFormCreatBtn>
             <p>{error}</p>
           </SModalTaskContent>
         </SModalTaskBlock>

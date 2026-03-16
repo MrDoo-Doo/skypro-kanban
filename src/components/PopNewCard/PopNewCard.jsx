@@ -19,7 +19,7 @@ import {
   SModalFormBlock,
 } from "./PopNewCard.styled";
 import Calendar from "../Calendar/Calendar";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import { TaskContext } from "../../context/TaskContext";
 
@@ -32,8 +32,7 @@ const localeDate = () => {
 
 const PopNewCard = () => {
   const navigate = useNavigate();
-  const { getTasks } = useOutletContext();
-  const { addNewTask } = useContext(TaskContext);
+  const { addNewTask, getTasks } = useContext(TaskContext);
 
   const [formData, setFormData] = useState({
     title: "",

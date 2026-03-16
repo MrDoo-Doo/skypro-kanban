@@ -29,7 +29,7 @@ import {
 } from "./PopBrowse.styled.js";
 import { useEffect, useContext, useState } from "react";
 import Calendar from "../Calendar/Calendar";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { TaskContext } from "../../context/TaskContext";
 
 const statuses = [
@@ -49,8 +49,7 @@ const localeDate = () => {
 
 const PopBrowse = ({ task, minusTask }) => {
   const navigate = useNavigate();
-  const { getTasks } = useOutletContext();
-  const { updateTask } = useContext(TaskContext);
+  const { updateTask, getTasks } = useContext(TaskContext);
 
   const [isEditing, setIsEditing] = useState(false);
   const [description, setDescription] = useState(task.description);

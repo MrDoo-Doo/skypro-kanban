@@ -18,9 +18,10 @@ const filterCards = (newCardArr, statusName) => {
   return cardArr;
 };
 
-const Main = ({ loading, error, tasks, getTasks }) => {
+const Main = () => {
   const navigate = useNavigate();
-  const { updateTask } = useContext(TaskContext);
+  const { updateTask, getTasks, loading, error, tasks } =
+    useContext(TaskContext);
   const [currentCard, setCurrentCard] = useState(null);
   const [showBlock, setShowBlock] = useState(false);
   const [errorMain, setError] = useState("");

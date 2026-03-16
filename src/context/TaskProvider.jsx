@@ -5,7 +5,7 @@ import { AuthContext } from "./AuthContext";
 
 export const TasksProvider = ({ children }) => {
   const [tasks, setTask] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const { user } = useContext(AuthContext);
 
@@ -56,10 +56,24 @@ export const TasksProvider = ({ children }) => {
     }
   };
 
+  const getTasks = async () => {
+    try {
+      const data = await fetchTasks({
+        token: user.token,
+      });
+      if (data) setTask(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <TaskContext.Provider
       value={{
         tasks,
+        getTasks,
         setTask,
         loading,
         error,
